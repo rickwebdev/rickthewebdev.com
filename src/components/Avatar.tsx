@@ -1,6 +1,10 @@
 import React, { useRef } from 'react';
 
-const Avatar: React.FC = () => {
+interface AvatarProps {
+  onLightbulbClick: () => void;
+}
+
+const Avatar: React.FC<AvatarProps> = ({ onLightbulbClick }) => {
   const avatarRef = useRef<HTMLImageElement>(null);
 
   const handleIconClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, url: string) => {
@@ -33,6 +37,14 @@ const Avatar: React.FC = () => {
       />
       
       <div className="icon-links">
+        <button
+          className="ideas-icon"
+          aria-label="Open Ideas"
+          onClick={onLightbulbClick}
+          type="button"
+        >
+          <i className="fas fa-lightbulb"></i>
+        </button>
         <a 
           href="https://www.linkedin.com/in/rickowadally/" 
           target="_blank" 

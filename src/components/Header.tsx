@@ -27,15 +27,15 @@ const skillsText = (
     </div>
     <h2 className="skills-heading">SKILLS</h2>
     <ul className="skills-list">
-      <li>Digital production and full-stack development</li>
-      <li>Creative direction and sound design</li>
-      <li>UI/UX design and prototyping</li>
-      <li>AI-integrated workflows</li>
-      <li>AV system setup and engineering</li>
-      <li>eCommerce implementation</li>
-      <li>Agile sprint planning and QA</li>
-      <li>Cross-functional collaboration and leadership</li>
-      <li>Technical writing and documentation</li>
+    <li>Digital Production and Full-Stack Development</li>
+    <li>Technical Leadership and Cross-Functional Collaboration</li>
+    <li>Creative Direction and UI/UX Design</li>
+    <li>Prototyping and Agile Sprint Planning</li>
+    <li>AI-Integrated Workflows and Automation</li>
+    <li>eCommerce Implementation and CMS Engineering</li> 
+    <li>Sound Design and Post Production</li>
+    <li>AV System Setup and Engineering</li>
+    <li>QA Testing and Performance Optimization</li>
     </ul>
   </div>
 );

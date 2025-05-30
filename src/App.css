@@ -1,3 +1,8 @@
+/*————————————————————————
+  App copy.css
+————————————————————————*/
+
+/* Global reset */
 body, html {
   margin: 0;
   padding: 0;
@@ -10,6 +15,7 @@ body, html {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
+/* Flex container */
 .flex-container {
   display: flex;
   justify-content: center;
@@ -19,12 +25,12 @@ body, html {
   z-index: 2;
   position: relative;
   align-items: center;
-  height: 100vh;
-  min-height: unset;
+  min-height: 100vh;
   width: 100vw;
   flex-wrap: nowrap;
 }
 
+/* Main box */
 .box {
   border: 2px solid rgba(255, 255, 255, 0.3);
   padding: 3rem 3.5rem 3rem 3rem;
@@ -39,17 +45,31 @@ body, html {
   mix-blend-mode: normal;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  height: 720px;
-  max-height: 80vh;
+  height: auto;
+  max-height: 85vh;
   min-height: 600px;
   border-radius: 18px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.25);
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: thin; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
 }
 
 .box::-webkit-scrollbar {
-  display: none; /* Chrome, Safari and Opera */
+  width: 8px;
+  display: block;
+}
+
+.box::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.box::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.box::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .box::before {
@@ -63,6 +83,7 @@ body, html {
   z-index: -1;
 }
 
+/* Headline */
 .large-text {
   font-size: clamp(3rem, 7vw, 7rem);
   font-weight: bold;
@@ -75,6 +96,7 @@ body, html {
   text-align: left;
 }
 
+/* Sub-labels */
 .small-text-container {
   display: flex;
   flex-wrap: wrap;
@@ -85,7 +107,6 @@ body, html {
   margin-top: 1rem;
   z-index: 2;
 }
-
 .small-text {
   font-size: 1.4rem;
   font-weight: bold;
@@ -99,12 +120,12 @@ body, html {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   margin-right: 0.4rem;
 }
-
 .small-text i {
   margin-right: 0.2rem;
   font-size: 1.7vw;
 }
 
+/* Summary text */
 .summary {
   margin-top: 1rem;
   font-size: 1.5vw;
@@ -117,13 +138,13 @@ body, html {
   z-index: 2;
 }
 
+/* Avatar */
 .avatar-container {
   position: relative;
   width: 300px;
   height: 300px;
   flex-shrink: 0;
 }
-
 .linkedin-avatar {
   width: 100%;
   height: 100%;
@@ -132,12 +153,10 @@ body, html {
   border: 2px solid black;
   transition: transform 0.3s ease;
 }
-
 .avatar-container:hover .linkedin-avatar {
   transform: rotate(3deg) scale(1.02);
   transition: transform 0.3s;
 }
-
 .avatar-container::before {
   content: '';
   position: absolute;
@@ -151,6 +170,7 @@ body, html {
   border-left: none;
 }
 
+/* Icon links */
 .icon-links {
   position: absolute;
   top: 0;
@@ -159,7 +179,15 @@ body, html {
   height: 100%;
   pointer-events: none;
 }
-
+.icon-links a {
+  color: white;
+  transition: transform 0.3s, color 0.3s;
+  display: inline-block;
+}
+.icon-links a:hover {
+  transform: scale(1.1) rotate(-5deg);
+  color: #00a0dc;
+}
 .linkedin-icon {
   position: absolute;
   top: -40px;
@@ -167,7 +195,6 @@ body, html {
   pointer-events: all;
   font-size: 3vw;
 }
-
 .pdf-icon {
   position: absolute;
   bottom: -40px;
@@ -176,17 +203,7 @@ body, html {
   font-size: 3vw;
 }
 
-.icon-links a {
-  color: white;
-  transition: transform 0.3s, color 0.3s;
-  display: inline-block;
-}
-
-.icon-links a:hover {
-  transform: scale(1.1) rotate(-5deg);
-  color: #00a0dc;
-}
-
+/* Gradient background */
 .gradient-background {
   position: absolute;
   top: 0;
@@ -198,18 +215,13 @@ body, html {
   z-index: 0;
   animation: gradientFlow 15s ease infinite;
 }
-
 @keyframes gradientFlow {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
+
+/* Location box */
 .location-insights {
   position: fixed;
   bottom: 3vh;
@@ -222,6 +234,7 @@ body, html {
   min-width: 300px;
 }
 
+/* Calculator */
 .calculator-screen {
   background: #000;
   border: 2px solid #333;
@@ -230,12 +243,12 @@ body, html {
   overflow: hidden;
 }
 
+/* Marquee */
 .marquee {
   width: 100%;
   overflow: hidden;
   white-space: nowrap;
 }
-
 .marquee-content {
   display: inline-block;
   color: #00ff00;
@@ -244,23 +257,22 @@ body, html {
   animation: scroll-left 30s linear infinite;
   padding-left: 100%;
 }
-
 @keyframes scroll-left {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-100%);
-  }
+  0%   { transform: translateX(0); }
+  100%{ transform: translateX(-100%); }
 }
-
 .marquee:hover .marquee-content {
   animation-play-state: paused;
 }
 
+/*————————————————————————
+  Mobile (≤768px)
+————————————————————————*/
 @media (max-width: 768px) {
   body, html {
     overflow-x: hidden;
+    overflow-y: auto;
+    height: auto;
   }
   .gradient-background,
   .rock-background {
@@ -344,12 +356,13 @@ body, html {
     max-width: 96vw;
     min-width: 0;
     width: 96vw;
-    height: 460px;
-    max-height: 60vh;
+    height: auto;
+    max-height: none;
     min-height: 300px;
     padding: 1.5rem 1rem 1.5rem 1rem;
     border-radius: 12px;
     background: rgba(0,0,0,0.4);
+    margin-bottom: 2rem;
   }
   .large-text {
     font-size: 12vw;
@@ -362,7 +375,8 @@ body, html {
     align-items: flex-start;
     width: 100%;
   }
-  .name-part.color-wash, .name-part.color-wash.dally {
+  .name-part.color-wash,
+  .name-part.color-wash.dally {
     font-size: 12vw;
     line-height: 1.1;
     -webkit-text-stroke: 0.5px white;
@@ -420,12 +434,20 @@ body, html {
   .ideas-icon {
     width: 56px;
     height: 56px;
-    font-size: 2.2rem;
+    font-size: 2.4rem;
     top: -32px;
     left: -32px;
   }
+  .box-close-btn {
+    font-size: 4rem;
+    height: 2.2em;
+    width: 2.2em;
+    top: 0.5rem;
+    right: 0.5rem;
+  }
 }
 
+/* Rock background & zoom */
 .rock-background {
   position: absolute;
   top: 0;
@@ -437,22 +459,17 @@ body, html {
   opacity: 0.5;
   animation: slowZoom 40s linear infinite alternate;
 }
-
 @keyframes slowZoom {
-  0% {
-    transform: scale(1) translate(0, 0);
-  }
-  100% {
-    transform: scale(1.15) translate(-2vw, -2vh);
-  }
+  0%   { transform: scale(1) translate(0, 0); }
+  100%{ transform: scale(1.15) translate(-2vw, -2vh); }
 }
 
+/* Name parts color wash */
 .name-parts {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
-
 .name-part.color-wash {
   background: linear-gradient(90deg, #ffe259, #ffa751, #43cea2, #185a9d, #43cea2, #ffe259);
   background-size: 200% 200%;
@@ -462,25 +479,23 @@ body, html {
   text-fill-color: transparent;
   animation: colorWash 4s linear infinite;
 }
-
 @keyframes colorWash {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
+  0%   { background-position: 0% 50%; }
+  100%{ background-position: 100% 50%; }
 }
 
-/* Avatar spin-off animation */
+/* Avatar spin-off */
 @keyframes spinOff {
-  0% { transform: rotate(0deg) scale(1); opacity: 1; }
-  100% { transform: rotate(720deg) scale(0); opacity: 0; }
+  0%   { transform: rotate(0deg) scale(1); opacity: 1; }
+  100%{ transform: rotate(720deg) scale(0); opacity: 0; }
 }
 .spin-off {
   animation: spinOff 1s ease-in-out forwards;
 }
 
+/*————————————————————————
+  Tablet (769–1024px)
+————————————————————————*/
 @media (min-width: 769px) and (max-width: 1024px) {
   .flex-container {
     gap: 3vw;
@@ -554,6 +569,7 @@ body, html {
   }
 }
 
+/* App launcher & ideas icon */
 .app-launcher-icon {
   position: absolute;
   left: 50%;
@@ -574,7 +590,8 @@ body, html {
   z-index: 3;
   transition: background 0.2s, color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
-.app-launcher-icon:hover, .app-launcher-icon:focus {
+.app-launcher-icon:hover,
+.app-launcher-icon:focus {
   background: #00a0dc;
   color: #fff;
   box-shadow: 0 4px 16px rgba(0,160,220,0.18);
@@ -606,35 +623,20 @@ body, html {
   color: #fff;
   transition: color 0.2s;
 }
-.ideas-icon:hover, .ideas-icon:focus {
+.ideas-icon:hover,
+.ideas-icon:focus {
   background: none;
   outline: none;
   transform: scale(1.08);
 }
-.ideas-icon:hover i, .ideas-icon:focus i {
+.ideas-icon:hover i,
+.ideas-icon:focus i {
   color: #ffe259;
 }
 
-@media (max-width: 768px) {
-  .ideas-icon {
-    width: 56px;
-    height: 56px;
-    font-size: 2.2rem;
-    top: -32px;
-    left: -32px;
-  }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  .ideas-icon {
-    width: 54px;
-    height: 54px;
-    font-size: 2rem;
-    top: -36px;
-    left: -36px;
-  }
-}
-
+/*————————————————————————
+  Portfolio & Websites
+————————————————————————*/
 .portfolio-container {
   width: 100%;
   height: 100%;
@@ -642,7 +644,6 @@ body, html {
   padding: 1rem;
   box-sizing: border-box;
 }
-
 .portfolio-title {
   font-size: 3vw;
   font-weight: bold;
@@ -653,14 +654,12 @@ body, html {
   line-height: 1.1;
   text-align: left;
 }
-
 .portfolio-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   padding: 0.5rem;
 }
-
 .website-card {
   background: rgba(0, 0, 0, 0.7);
   border: 2px solid rgba(255, 255, 255, 0.3);
@@ -673,12 +672,10 @@ body, html {
   position: relative;
   height: 100%;
 }
-
 .website-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
-
 .website-card::after {
   content: '↗';
   position: absolute;
@@ -688,29 +685,24 @@ body, html {
   font-size: 1.2rem;
   transition: color 0.3s ease;
 }
-
 .website-card:hover::after {
   color: rgba(255, 255, 255, 0.9);
 }
-
 .website-image {
   width: 100%;
   height: 200px;
   object-fit: cover;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
-
 .website-info {
   padding: 1rem;
 }
-
 .website-info h3 {
   color: white;
   font-size: 1.2rem;
   margin: 0 0 0.5rem 0;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-
 .website-info p {
   color: rgba(255, 255, 255, 0.8);
   font-size: 0.9rem;
@@ -718,68 +710,64 @@ body, html {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
-/* Tablet Styles */
+/* Tablet portfolio */
 @media (min-width: 769px) and (max-width: 1024px) {
   .portfolio-container {
     padding: 1rem;
   }
-
   .portfolio-title {
     font-size: 3vw;
     margin-bottom: 1rem;
   }
-
   .portfolio-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
-
   .website-image {
     height: 180px;
   }
 }
 
-/* Mobile Styles */
+/* Mobile portfolio */
 @media (max-width: 768px) {
   .portfolio-container {
     padding: 0.75rem;
     height: auto;
     overflow-y: visible;
   }
-
   .portfolio-title {
     font-size: 5vw;
     -webkit-text-stroke: 1px white;
     margin-bottom: 1rem;
   }
-
   .portfolio-grid {
     grid-template-columns: 1fr;
     gap: 1.25rem;
   }
-
   .website-card {
     max-width: 100%;
   }
-
   .website-image {
     height: 160px;
   }
-
   .website-info h3 {
     font-size: 1.1rem;
   }
-
   .website-info p {
     font-size: 0.85rem;
   }
+  .ideas-icon {
+    font-size: 2.4rem;
+  }
 }
 
+/*————————————————————————
+  Large screens (≥1800px)
+————————————————————————*/
 @media (min-width: 1800px) {
   .ideas-icon {
     font-size: 4rem;
   }
-
   .box {
     max-width: 1200px;
     min-width: 700px;
@@ -794,7 +782,7 @@ body, html {
   .small-text i {
     margin-right: 0.5rem;
     font-size: 1.28vw;
-}
+  }
   .large-text {
     font-size: clamp(4rem, 6vw, 8rem);
   }
@@ -804,6 +792,7 @@ body, html {
   }
 }
 
+/* Portfolio nav */
 .portfolio-nav {
   display: flex;
   justify-content: space-between;
@@ -815,13 +804,11 @@ body, html {
   text-transform: uppercase;
   gap: 0.5rem;
 }
-
 .portfolio-nav-group {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
-
 .portfolio-nav-btn {
   background: none;
   border: none;
@@ -834,17 +821,14 @@ body, html {
   transition: color 0.2s, background 0.2s;
   -webkit-text-stroke: 1.5px white;
 }
-
 .portfolio-nav-btn.active {
   color: #ffe259;
   background: rgba(255, 255, 255, 0.08);
   -webkit-text-stroke: 1.5px #ffe259;
 }
-
 .portfolio-nav-btn:hover:not(.active) {
   color: #ffe259;
 }
-
 .portfolio-nav-sep {
   color: #fff;
   opacity: 0.5;
@@ -853,6 +837,7 @@ body, html {
   user-select: none;
 }
 
+/* Skills section */
 .skills-section {
   color: white;
   padding: 1rem 1.5rem;
@@ -868,25 +853,20 @@ body, html {
   scrollbar-width: thin; /* Firefox */
   scrollbar-color: rgba(255, 255, 255, 0.3) transparent; /* Firefox */
 }
-
 .skills-section::-webkit-scrollbar {
   width: 8px;
   display: block;
 }
-
 .skills-section::-webkit-scrollbar-track {
   background: transparent;
 }
-
 .skills-section::-webkit-scrollbar-thumb {
   background-color: rgba(255, 255, 255, 0.3);
   border-radius: 4px;
 }
-
 .skills-section::-webkit-scrollbar-thumb:hover {
   background-color: rgba(255, 255, 255, 0.5);
 }
-
 .skills-heading {
   font-size: 1.5vw;
   color: #ffe259;
@@ -894,27 +874,26 @@ body, html {
   -webkit-text-stroke: 1px #ffe259;
   text-transform: uppercase;
 }
-
 .skills-block {
   margin-bottom: 1em;
   font-size: 1.1vw;
 }
-
 .skills-list {
   margin: 0.5em 0 0 1.2em;
   padding: 0;
   list-style: disc inside;
   font-size: 1.1vw;
 }
-
 .skills-list li {
   margin-bottom: 0.3em;
 }
 
+/* Mobile nav & skills tweaks */
 @media (max-width: 768px) {
   .portfolio-nav {
     font-size: 5vw;
     margin: 0 0 1rem 0.5rem;
+    min-height: 2.2em;
   }
   .portfolio-nav-sep {
     font-size: 3vw;
@@ -927,11 +906,13 @@ body, html {
     font-size: 4vw;
     -webkit-text-stroke: 0.5px #ffe259;
   }
-  .skills-block, .skills-list {
+  .skills-block,
+  .skills-list {
     font-size: 3vw;
   }
 }
 
+/* Box close button */
 .box-close-btn {
   background: none;
   border: none;
@@ -941,8 +922,11 @@ body, html {
   cursor: pointer;
   opacity: 0.7;
   transition: opacity 0.2s, color 0.2s;
-  margin-left: 1.2rem;
-  align-self: center;
+  margin-left: 0;
+  top: unset;
+  position: absolute;
+  top: 0.2rem;
+  right: 0.2rem;
   line-height: 1;
   vertical-align: middle;
   padding: 0;
@@ -951,14 +935,16 @@ body, html {
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative;
-  top: -8px;
+  z-index: 10;
 }
-.box-close-btn:hover, .box-close-btn:focus {
+.box-close-btn:hover,
+.box-close-btn:focus {
   color: #ffe259;
   opacity: 1;
   outline: none;
 }
+
+/* Medium nav & close tweaks */
 @media (max-width: 1024px) {
   .portfolio-nav {
     font-size: 3.2vw;
@@ -966,23 +952,10 @@ body, html {
     min-height: 2.6em;
   }
   .box-close-btn {
-    font-size: inherit;
-    margin-left: 0.7rem;
+    font-size: 2rem;
     height: 1.7em;
     width: 1.7em;
-
-  }
-}
-@media (max-width: 768px) {
-  .portfolio-nav {
-    font-size: 5vw;
-    margin: 0 0 1rem 0.5rem;
-    min-height: 2.2em;
-  }
-  .box-close-btn {
-    font-size: inherit;
-    margin-left: 0.5rem;
-    height: 1.3em;
-    width: 1.3em;
+    top: 0.2rem;
+    right: 0.7rem;
   }
 }

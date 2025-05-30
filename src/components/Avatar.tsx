@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 
 interface AvatarProps {
-  onLightbulbClick: () => void;
+  onLightbulbClick?: () => void;
 }
 
 const Avatar: React.FC<AvatarProps> = ({ onLightbulbClick }) => {
@@ -37,14 +37,16 @@ const Avatar: React.FC<AvatarProps> = ({ onLightbulbClick }) => {
       />
       
       <div className="icon-links">
-        <button
-          className="ideas-icon"
-          aria-label="Open Ideas"
-          onClick={onLightbulbClick}
-          type="button"
-        >
-          <i className="fas fa-lightbulb"></i>
-        </button>
+        {onLightbulbClick && (
+          <button
+            className="ideas-icon"
+            aria-label="Open Ideas"
+            onClick={onLightbulbClick}
+            type="button"
+          >
+            <i className="fas fa-lightbulb"></i>
+          </button>
+        )}
         <a 
           href="https://www.linkedin.com/in/rickowadally/" 
           target="_blank" 

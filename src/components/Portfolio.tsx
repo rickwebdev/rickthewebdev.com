@@ -8,7 +8,7 @@ interface WebsiteCard {
   url: string;
 }
 
-const Portfolio: React.FC = () => {
+const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
   const websites: WebsiteCard[] = [
     {
       id: 1,
@@ -63,7 +63,7 @@ const Portfolio: React.FC = () => {
 
   return (
     <div className="portfolio-container">
-      <h1 className="portfolio-title">WORK</h1>
+      {!hideTitle && <h1 className="portfolio-title">WORK</h1>}
       <div className="portfolio-grid">
         {websites.map((website) => (
           <a 

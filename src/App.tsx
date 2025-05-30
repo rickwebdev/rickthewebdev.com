@@ -2,14 +2,14 @@ import { useState } from 'react';
 import Header from './components/Header';
 import Avatar from './components/Avatar';
 import LocationInsights from './components/LocationInsights';
+import IntroSection from './components/IntroSection';
 import './App.css';
 
 function App() {
-  const [showPortfolio, setShowPortfolio] = useState(false);
+  const [boxOpen, setBoxOpen] = useState(false);
 
-  const togglePortfolio = () => {
-    setShowPortfolio(!showPortfolio);
-  };
+  const openBox = () => setBoxOpen(true);
+  const closeBox = () => setBoxOpen(false);
 
   return (
     <>
@@ -19,8 +19,12 @@ function App() {
       <LocationInsights />
       
       <div className="flex-container">
-        <Header showPortfolio={showPortfolio} onTogglePortfolio={togglePortfolio} />
-        <Avatar onLightbulbClick={togglePortfolio} />
+        {boxOpen ? (
+          <Header onClose={closeBox} />
+        ) : (
+          <IntroSection />
+        )}
+        <Avatar onLightbulbClick={openBox} />
       </div>
     </>
   );

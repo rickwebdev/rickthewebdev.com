@@ -222,10 +222,17 @@ const LocationInsights: React.FC = () => {
     const fetchLocation = async () => {
       try {
         console.log('Attempting to fetch location data...');
-        const response = await fetch('http://ip-api.com/json/');
+        // Try ipinfo.io first
+        const response = await fetch('https://ipinfo.io/json', {
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+        
         if (!response.ok) {
           throw new Error(`Location fetch failed: ${response.status}`);
         }
+        
         const data = await response.json();
         console.log('Location data received:', data);
         
@@ -234,7 +241,7 @@ const LocationInsights: React.FC = () => {
         }
 
         const city = data.city || 'Unknown City';
-        const state = data.regionName || '';
+        const state = data.region || '';
         const country = data.country || 'Unknown Country';
         
         let locationString = [city, state, country].filter(Boolean).join(', ');
@@ -268,9 +275,9 @@ const LocationInsights: React.FC = () => {
         setLocationMessage(message);
       } catch (error: any) {
         console.error('Error fetching location:', error);
-        // More detailed error message
-        const errorMessage = `Unable to fetch location (${error?.message || 'Unknown error'}). Welcome to my portfolio! • Unable to fetch location (${error?.message || 'Unknown error'}). Welcome to my portfolio! • Unable to fetch location (${error?.message || 'Unknown error'}). Welcome to my portfolio! • `;
-        setLocationMessage(errorMessage);
+        // Fallback to a simpler welcome message without location
+        const fallbackMessage = 'Welcome to my portfolio! Thanks for visiting! • Welcome to my portfolio! Thanks for visiting! • Welcome to my portfolio! Thanks for visiting! • ';
+        setLocationMessage(fallbackMessage);
       }
     };
 

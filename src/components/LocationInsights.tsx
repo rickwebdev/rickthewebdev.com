@@ -221,15 +221,21 @@ const LocationInsights: React.FC = () => {
   useEffect(() => {
     const fetchLocation = async () => {
       try {
-        const response = await fetch('https://ipapi.co/json/');
+        console.log('Attempting to fetch location data...');
+        const response = await fetch('http://ip-api.com/json/');
         if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error(`Location fetch failed: ${response.status}`);
         }
         const data = await response.json();
+        console.log('Location data received:', data);
         
+        if (!data || !data.country) {
+          throw new Error('Invalid location data received');
+        }
+
         const city = data.city || 'Unknown City';
-        const state = data.region !== 'Unknown State' ? data.region : '';
-        const country = data.country_name || 'Unknown Country';
+        const state = data.regionName || '';
+        const country = data.country || 'Unknown Country';
         
         let locationString = [city, state, country].filter(Boolean).join(', ');
         let message = `Hello visitor from ${locationString}! `;
@@ -256,10 +262,15 @@ const LocationInsights: React.FC = () => {
           }
         }
         
+        // Duplicate the message for smooth looping
+        message = `${message} • `.repeat(3);
+        
         setLocationMessage(message);
-      } catch (error) {
+      } catch (error: any) {
         console.error('Error fetching location:', error);
-        setLocationMessage('Unable to fetch location. Welcome to my portfolio!');
+        // More detailed error message
+        const errorMessage = `Unable to fetch location (${error?.message || 'Unknown error'}). Welcome to my portfolio! • Unable to fetch location (${error?.message || 'Unknown error'}). Welcome to my portfolio! • Unable to fetch location (${error?.message || 'Unknown error'}). Welcome to my portfolio! • `;
+        setLocationMessage(errorMessage);
       }
     };
 

@@ -214,6 +214,7 @@ body, html {
   padding: 10px;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
   width: 20%;
+  min-width: 300px;
 }
 
 .calculator-screen {
@@ -225,8 +226,8 @@ body, html {
 }
 
 .marquee {
-  width: 200px;
-  /* overflow: hidden; */
+  width: 100%;
+  overflow: hidden;
   white-space: nowrap;
 }
 
@@ -235,12 +236,13 @@ body, html {
   color: #00ff00;
   font-family: 'Courier New', monospace;
   font-size: 14px;
-  animation: scroll-left 20s linear infinite;
+  animation: scroll-left 30s linear infinite;
+  padding-left: 100%;
 }
 
 @keyframes scroll-left {
   0% {
-    transform: translateX(100%);
+    transform: translateX(0);
   }
   100% {
     transform: translateX(-100%);
@@ -378,13 +380,17 @@ body, html {
     line-height: 1.4;
   }
   .location-insights {
-    display: none;
+    width: 90%;
+    min-width: unset;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 10px;
   }
   .calculator-screen {
     padding: 4px;
   }
-  .marquee {
-    width: 90vw;
+  .marquee-content {
+    font-size: 12px;
   }
   .rock-background {
     position: absolute;

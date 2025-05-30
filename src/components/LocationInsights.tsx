@@ -247,19 +247,37 @@ const LocationInsights: React.FC = () => {
         let locationString = [city, state, country].filter(Boolean).join(', ');
         let message = `Hello visitor from ${locationString}! `;
         
-        if (country === 'United States') {
+        // Normalize country name for matching
+        const normalizedCountry = country.toLowerCase().trim();
+        const isUS = normalizedCountry === 'us' || normalizedCountry === 'united states' || normalizedCountry === 'usa';
+        
+        if (isUS) {
+          // Normalize state name for matching
+          const normalizedState = state.toLowerCase().trim();
+          const normalizedCity = city.toLowerCase().trim();
+          
+          // Find matching state
           const stateKey = Object.keys(stateMessages.states).find(key => 
-            key.toLowerCase() === state.toLowerCase()
+            key.toLowerCase() === normalizedState
           );
           
           if (stateKey) {
-            message += stateMessages.states[stateKey].message;
+            // Special cases for cities that might need different handling
+            if (normalizedCity.includes('new york') && normalizedState === 'new york') {
+              message += stateMessages.states["New York"].message;
+            } else if (normalizedCity.includes('los angeles') && normalizedState === 'california') {
+              message += stateMessages.states["California"].message;
+            } else if (normalizedCity.includes('chicago') && normalizedState === 'illinois') {
+              message += stateMessages.states["Illinois"].message;
+            } else {
+              message += stateMessages.states[stateKey].message;
+            }
           } else {
             message += `Welcome to ${state}! We don't have a special message for you yet, but we're sure it's a great place!`;
           }
         } else {
           const countryKey = Object.keys(stateMessages.countries).find(key => 
-            key.toLowerCase() === country.toLowerCase()
+            key.toLowerCase() === normalizedCountry
           );
           
           if (countryKey) {

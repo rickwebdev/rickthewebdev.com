@@ -51,6 +51,13 @@ const Portfolio: React.FC = () => {
       subtitle: "UX, Dev",
       image: "/images/website6.png",
       url: "https://rickthewebdev.com/magic-8-ball/"
+    },
+    {
+      id: 7,
+      title: "Website",
+      subtitle: "UX, Dev, Design",
+      image: "/images/website7.png",
+      url: "https://profusek.com/"
     }
   ];
 
@@ -66,7 +73,14 @@ const Portfolio: React.FC = () => {
             rel="noopener noreferrer"
             className="website-card"
           >
-            <img src={website.image} alt={website.title} className="website-image" />
+            <img 
+              src={website.image} 
+              alt={website.title} 
+              className="website-image" 
+              loading="lazy" 
+              width={400} 
+              height={200} 
+            />
             <div className="website-info">
               <h3>{website.title}</h3>
               <p>{website.subtitle}</p>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
 interface StateMessages {
   states: {
@@ -217,12 +217,79 @@ const stateMessages: StateMessages = {
 
 const LocationInsights: React.FC = () => {
   const [locationMessage, setLocationMessage] = useState<string>('Fetching your location...');
+  const [position, setPosition] = useState<{ x: number; y: number } | null>(null);
+  const [dragging, setDragging] = useState(false);
+  const [width, setWidth] = useState(350);
+  const [resizing, setResizing] = useState(false);
+  const [visible, setVisible] = useState(true);
+  const [hasMoved, setHasMoved] = useState(false);
+  const dragOffset = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+  const resizeStart = useRef<{ x: number; y: number; width: number }>({ x: 0, y: 0, width: 0 });
+  const nodeRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (dragging) {
+        setPosition({
+          x: e.clientX - dragOffset.current.x,
+          y: e.clientY - dragOffset.current.y,
+        });
+        setHasMoved(true);
+      } else if (resizing) {
+        const dx = resizeStart.current.x - e.clientX;
+        setWidth(Math.max(200, resizeStart.current.width + dx));
+        setPosition(pos => {
+          setHasMoved(true);
+          return { ...((pos as any) || {}), x: resizeStart.current.x - dx, y: (pos ? pos.y : 0) };
+        });
+      }
+    };
+    const handleMouseUp = () => {
+      setDragging(false);
+      setResizing(false);
+    };
+    if (dragging || resizing) {
+      document.addEventListener('mousemove', handleMouseMove);
+      document.addEventListener('mouseup', handleMouseUp);
+    } else {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    }
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [dragging, resizing]);
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).classList.contains('resize-handle')) return;
+    if (nodeRef.current) {
+      const rect = nodeRef.current.getBoundingClientRect();
+      dragOffset.current = {
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
+      };
+      setDragging(true);
+    }
+  };
+
+  const onResizeMouseDown = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (nodeRef.current) {
+      const rect = nodeRef.current.getBoundingClientRect();
+      resizeStart.current = {
+        x: rect.left,
+        y: rect.bottom,
+        width,
+      };
+      setResizing(true);
+    }
+  };
 
   useEffect(() => {
     const fetchLocation = async () => {
       try {
         console.log('Attempting to fetch location data...');
-        // Try ipinfo.io first
         const response = await fetch('https://ipinfo.io/json', {
           headers: {
             'Accept': 'application/json'
@@ -247,22 +314,18 @@ const LocationInsights: React.FC = () => {
         let locationString = [city, state, country].filter(Boolean).join(', ');
         let message = `Hello visitor from ${locationString}! `;
         
-        // Normalize country name for matching
         const normalizedCountry = country.toLowerCase().trim();
         const isUS = normalizedCountry === 'us' || normalizedCountry === 'united states' || normalizedCountry === 'usa';
         
         if (isUS) {
-          // Normalize state name for matching
           const normalizedState = state.toLowerCase().trim();
           const normalizedCity = city.toLowerCase().trim();
           
-          // Find matching state
           const stateKey = Object.keys(stateMessages.states).find(key => 
             key.toLowerCase() === normalizedState
           );
           
           if (stateKey) {
-            // Special cases for cities that might need different handling
             if (normalizedCity.includes('new york') && normalizedState === 'new york') {
               message += stateMessages.states["New York"].message;
             } else if (normalizedCity.includes('los angeles') && normalizedState === 'california') {
@@ -287,13 +350,11 @@ const LocationInsights: React.FC = () => {
           }
         }
         
-        // Duplicate the message for smooth looping
         message = `${message} • `.repeat(3);
         
         setLocationMessage(message);
       } catch (error: any) {
         console.error('Error fetching location:', error);
-        // Fallback to a simpler welcome message without location
         const fallbackMessage = 'Welcome to my portfolio! Thanks for visiting! • Welcome to my portfolio! Thanks for visiting! • Welcome to my portfolio! Thanks for visiting! • ';
         setLocationMessage(fallbackMessage);
       }
@@ -302,15 +363,84 @@ const LocationInsights: React.FC = () => {
     fetchLocation();
   }, []);
 
+  if (!visible) return null;
+
   return (
-    <div id="location-insights" className="location-insights">
-      <div className="calculator-screen">
+    <div
+      id="location-insights"
+      className="location-insights"
+      ref={nodeRef}
+      onMouseDown={onMouseDown}
+      style={{
+        position: 'fixed',
+        width: width,
+        height: 'auto',
+        cursor: dragging ? 'grabbing' : (resizing ? 'sw-resize' : 'grab'),
+        zIndex: 1000,
+        userSelect: 'none',
+        minWidth: 200,
+        boxSizing: 'border-box',
+        overflow: 'visible',
+        ...(hasMoved && position ? { left: position.x, top: position.y, right: 'auto', bottom: 'auto' } : {}),
+      }}
+    >
+      <button
+        onClick={() => setVisible(false)}
+        style={{
+          position: 'absolute',
+          top: -7,
+          left: -4,
+          width: 20,
+          height: 20,
+          background: '#e53935',
+          color: '#fff',
+          fontWeight: 'bold',
+          fontSize: '1.15rem',
+          fontFamily: 'monospace, sans-serif',
+          cursor: 'pointer',
+          zIndex: 1200,
+          lineHeight: 1,
+          padding: 0,
+          opacity: 0.92,
+          transition: 'opacity 0.2s, background 0.2s',
+          borderRadius: '50%',
+          border: '1px solid #fff',
+          boxShadow: '0 2px 8px rgba(0,0,0,0.18)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        aria-label="Close location insights"
+        title="Close"
+        onMouseOver={e => (e.currentTarget.style.opacity = '1')}
+        onMouseOut={e => (e.currentTarget.style.opacity = '0.92')}
+      >
+        {'✕'}
+      </button>
+      <div className="calculator-screen" style={{width: '100%'}}>
         <div className="marquee">
           <div id="location-message" className="marquee-content">
             {locationMessage}
           </div>
         </div>
       </div>
+      <div
+        className="resize-handle"
+        onMouseDown={onResizeMouseDown}
+        style={{
+          position: 'absolute',
+          left: 0,
+          bottom: 0,
+          width: 24,
+          height: 24,
+          cursor: 'sw-resize',
+          zIndex: 1100,
+          userSelect: 'none',
+          background: 'transparent',
+          padding: 0,
+        }}
+        title="Resize from bottom left"
+      />
     </div>
   );
 };

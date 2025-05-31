@@ -418,7 +418,7 @@ const LocationInsights: React.FC = () => {
         setLocationMessage(message);
       } catch (error: any) {
         console.error('Error fetching location:', error);
-        const fallbackMessage = 'If you see this message, the API is not working as intended. Welcome to my portfolio! Thanks for visiting! ';
+        const fallbackMessage = 'The location API has reached its daily limit. Welcome to my portfolio! Thanks for visiting! ';
         setLocationMessage(fallbackMessage);
       }
     };

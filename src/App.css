@@ -680,6 +680,11 @@ body, html {
   cursor: pointer;
   position: relative;
   height: 100%;
+  opacity: 0;
+  transition: opacity 0.7s cubic-bezier(.4,0,.2,1);
+}
+.website-card.card-loaded {
+  opacity: 1;
 }
 .website-card:hover {
   transform: translateY(-5px);
@@ -702,6 +707,8 @@ body, html {
   height: 200px;
   object-fit: cover;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+  opacity: 1;
+  transition: none;
 }
 .website-info {
   padding: 1rem;
@@ -985,5 +992,48 @@ body, html {
     width: 1.7em;
     top: 0.2rem;
     right: 0.7rem;
+  }
+}
+
+/* Portfolio preloader spinner */
+.portfolio-preloader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+  width: 100%;
+}
+.spinner {
+  border: 6px solid rgba(255,255,255,0.2);
+  border-top: 6px solid #ffe259;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.portfolio-preloader-overlay {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: auto;
+  height: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  z-index: 10;
+  pointer-events: none;
+}
+
+@media (max-width: 1024px) {
+  .portfolio-preloader-overlay {
+    position: absolute;
+    top: 5%;
   }
 }

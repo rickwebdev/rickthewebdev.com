@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 interface WebsiteCard {
   id: number;
@@ -13,16 +13,29 @@ const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
     {
       id: 1,
       title: "Website",
-      subtitle: "UX, Dev, Design",
+      subtitle: "UX, Dev, Design, Logo",
       image: "/images/website1.png",
       url: "https://coastalluxepainting.com/"
     },
     {
       id: 2,
       title: "Website",
-      subtitle: "UX, Dev, Design",
+      subtitle: "UX, Dev, Design, Logo",
       image: "/images/website2.png",
       url: "https://coastalluxeflooring.com/"
+    }, {
+      id: 7,
+      title: "Website",
+      subtitle: "UX, Dev, Design, CMS",
+      image: "/images/website7.png",
+      url: "https://profusek.com/"
+    },
+    {
+      id: 8,
+      title: "Website",
+      subtitle: "UX, Dev, Design, Logo",
+      image: "/images/website8.png",
+      url: "https://taxexemptconsultants.com/"
     },
     {
       id: 3,
@@ -52,34 +65,64 @@ const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
       image: "/images/website6.png",
       url: "https://rickthewebdev.com/magic-8-ball/"
     },
+
     {
-      id: 7,
+      id: 10,
       title: "Website",
       subtitle: "UX, Dev, Design",
-      image: "/images/website7.png",
-      url: "https://profusek.com/"
+      image: "/images/website10.png",
+      url: "https://ifatknaankostman.com/"
+    },
+    {
+      id: 11,
+      title: "Website",
+      subtitle: "UX, Tech Lead",
+      image: "/images/website11.png",
+      url: "https://diabeteseducation.novocare.com/"
+    },
+    {
+      id: 9,
+      title: "Web App",
+      subtitle: "UX, Dev, Design",
+      image: "/images/website9.png",
+      url: "/"
     }
-  ];
+  ]
+
+  const [imagesLoaded, setImagesLoaded] = useState(0);
+  const totalImages = websites.length;
+  const allLoaded = imagesLoaded === totalImages;
+
+  const handleImageLoad = () => {
+    setImagesLoaded((prev) => prev + 1);
+  };
 
   return (
-    <div className="portfolio-container">
+    <div className="portfolio-container" style={{ position: 'relative' }}>
       {!hideTitle && <h1 className="portfolio-title">WORK</h1>}
-      <div className="portfolio-grid">
+      {/* Spinner overlay */}
+      {!allLoaded && (
+        <div className="portfolio-preloader-overlay">
+          <div className="spinner"></div>
+        </div>
+      )}
+      <div className="portfolio-grid" style={{ opacity: 1, filter: !allLoaded ? 'blur(2px)' : 'none', transition: 'filter 0.3s' }}>
         {websites.map((website) => (
           <a 
             key={website.id} 
             href={website.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="website-card"
+            className={`website-card${allLoaded ? ' card-loaded' : ''}`}
           >
             <img 
               src={website.image} 
               alt={website.title} 
-              className="website-image" 
-              loading="lazy" 
+              className="website-image"
               width={400} 
               height={200} 
+              onLoad={handleImageLoad}
+              onError={handleImageLoad}
             />
             <div className="website-info">
               <h3>{website.title}</h3>

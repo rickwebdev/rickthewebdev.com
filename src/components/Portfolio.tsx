@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface WebsiteCard {
   id: number;
@@ -90,12 +90,20 @@ const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
   ]
 
   const [imagesLoaded, setImagesLoaded] = useState(0);
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
   const totalImages = websites.length;
   const allLoaded = imagesLoaded === totalImages;
 
   const handleImageLoad = () => {
     setImagesLoaded((prev) => prev + 1);
   };
+
+  // Reset first load state when component unmounts
+  useEffect(() => {
+    return () => {
+      setIsFirstLoad(false);
+    };
+  }, []);
 
   return (
     <div className="portfolio-container" style={{ position: 'relative' }}>
@@ -106,14 +114,14 @@ const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
           <div className="spinner"></div>
         </div>
       )}
-      <div className="portfolio-grid" style={{ opacity: 1, filter: !allLoaded ? 'blur(2px)' : 'none', transition: 'filter 0.3s' }}>
+      <div className={`portfolio-grid ${allLoaded ? 'grid-loaded' : ''} ${!isFirstLoad ? 'no-animation' : ''}`}>
         {websites.map((website) => (
           <a 
             key={website.id} 
             href={website.url}
             target="_blank"
             rel="noopener noreferrer"
-            className={`website-card${allLoaded ? ' card-loaded' : ''}`}
+            className="website-card"
           >
             <img 
               src={website.image} 

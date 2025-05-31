@@ -725,6 +725,26 @@ body, html {
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   padding: 0.5rem;
+  visibility: hidden;
+  opacity: 0;
+  filter: blur(10px);
+  transition: opacity 1.2s cubic-bezier(.4,0,.2,1), 
+              visibility 0s linear 1.2s,
+              filter 1.2s cubic-bezier(.4,0,.2,1);
+}
+.portfolio-grid.no-animation {
+  visibility: visible;
+  opacity: 1;
+  filter: none;
+  transition: none;
+}
+.portfolio-grid.grid-loaded {
+  visibility: visible;
+  opacity: 1;
+  filter: blur(0);
+  transition: opacity 1.2s cubic-bezier(.4,0,.2,1), 
+              visibility 0s linear 0s,
+              filter 1.2s cubic-bezier(.4,0,.2,1);
 }
 .website-card {
   background: rgba(0, 0, 0, 0.7);
@@ -737,11 +757,6 @@ body, html {
   cursor: pointer;
   position: relative;
   height: 100%;
-  opacity: 0;
-  transition: opacity 0.7s cubic-bezier(.4,0,.2,1);
-}
-.website-card.card-loaded {
-  opacity: 1;
 }
 .website-card:hover {
   transform: translateY(-5px);

@@ -891,13 +891,15 @@ body, html {
   font-size: 1.1vw;
 }
 .skills-list {
-  margin: 0.5em 0 0 1.2em;
-  padding: 0;
-  list-style: disc inside;
+  margin: 0;
+  padding-left: 1em;
+  list-style: disc outside;
   font-size: 1.1vw;
+  text-align: left;
 }
 .skills-list li {
   margin-bottom: 0.3em;
+  text-align: left;
 }
 
 /* Mobile nav & skills tweaks */
@@ -929,8 +931,12 @@ body, html {
     box-sizing: border-box;
   }
   .skills-list {
-    padding-left: 1.2em;
+    padding-left: 1em;
     margin-left: 0;
+    text-align: left;
+  }
+  .skills-list li {
+    text-align: left;
   }
 }
 

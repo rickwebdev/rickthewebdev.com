@@ -12,7 +12,7 @@ body, html {
   overflow-x: hidden;
   overflow-y: auto;
   background-color: #000;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
 }
 
 /* Flex container */

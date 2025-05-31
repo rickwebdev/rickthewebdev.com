@@ -211,6 +211,63 @@ const stateMessages: StateMessages = {
     },
     "New Zealand": {
       "message": "Kia ora! Are there really more sheep than people here, or is that just pulling my wool?"
+    },
+    "Switzerland": {
+      "message": "Is it true everyone here has a secret bank account and a pet cow?"
+    },
+    "Sweden": {
+      "message": "So, where do I pick up my free IKEA furniture?"
+    },
+    "Norway": {
+      "message": "If I yell loud enough, will an actual Viking show up?"
+    },
+    "Finland": {
+      "message": "Is it true you have more saunas than cars? Can I drive a sauna?"
+    },
+    "South Korea": {
+      "message": "So, can I just walk into a K-pop music video, or do I need a ticket?"
+    },
+    "China": {
+      "message": "If I start at the Great Wall, can I see my house from here?"
+    },
+    "Egypt": {
+      "message": "Can I climb the pyramids, or is that just for mummies?"
+    },
+    "South Africa": {
+      "message": "So, do lions just walk down the street, or do they use the crosswalk?"
+    },
+    "Turkey": {
+      "message": "Is it true you eat turkey every day, or is that just Thanksgiving?"
+    },
+    "Greece": {
+      "message": "If I shout 'Opa!' will someone start smashing plates?"
+    },
+    "Thailand": {
+      "message": "So, can I ride an elephant to my hotel, or is that just for the movies?"
+    },
+    "Singapore": {
+      "message": "Is it true you get fined for chewing gum, or is that just a sticky rumor?"
+    },
+    "Russia": {
+      "message": "If I keep heading east, do I end up in Alaska?"
+    },
+    "Argentina": {
+      "message": "If I order a steak, does it come with a free tango lesson?"
+    },
+    "Chile": {
+      "message": "Is everything here spicy, or is that just the name?"
+    },
+    "Philippines": {
+      "message": "So, if I visit all 7,000 islands, do I get a prize?"
+    },
+    "Saudi Arabia": {
+      "message": "Is it true the sand here is imported from somewhere else?"
+    },
+    "United Arab Emirates": {
+      "message": "If I dig in the desert, will I hit oil or just more sand?"
+    },
+    "Morocco": {
+      "message": "If I rub a lamp, will a genie really pop out, or is that just in cartoons?"
     }
   }
 };

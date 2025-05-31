@@ -182,7 +182,7 @@ body, html {
 /* Summary text */
 .summary {
   margin-top: 1rem;
-  font-size: 1.5vw;
+  font-size: 1.4vw;
   color: white;
   text-align: left;
   line-height: 1.4;
@@ -249,14 +249,14 @@ body, html {
   top: -40px;
   right: -40px;
   pointer-events: all;
-  font-size: 3vw;
+  font-size: 3rem;
 }
 .pdf-icon {
   position: absolute;
   bottom: -40px;
   right: -40px;
   pointer-events: all;
-  font-size: 3vw;
+  font-size: 3rem;
 }
 
 /* Gradient background */
@@ -667,7 +667,7 @@ body, html {
 
 .ideas-icon {
   position: absolute;
-  top: -40px;
+  top: -36px;
   left: -40px;
   background: none;
   color: #fff;

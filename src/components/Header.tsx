@@ -11,9 +11,9 @@ const skillsText = (
       <li>Rapid Prototyping &amp; Agile Sprint Planning</li>
       <li>AI-Integrated Workflows &amp; Automation</li>
       <li>CMS Architecture &amp; eCommerce Implementation</li>
-      <li>Sound Design, Mixing &amp; Post Production</li>
+      <li>QA Testing, Web Performance &amp; Optimization</li>
+      <li>Sound Design, Mixing &amp; Post-Production</li>
       <li>AV Systems Engineering &amp; Setup</li>
-      <li>QA Testing &amp; Performance Optimization</li>
     </ul>
     <div style={{ borderTop: '1.5px solid #ffe259', margin: '2.2rem 0 1.5rem 0', opacity: 0.5 }} />
     <h2 className="skills-heading">TECHNOLOGIES &amp; TOOLS</h2>

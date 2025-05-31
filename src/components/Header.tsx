@@ -2,41 +2,49 @@ import React, { useState } from 'react';
 import Portfolio from './Portfolio';
 
 const skillsText = (
-  <div className="skills-section">
-    <h2 className="skills-heading">TECHNOLOGIES & TOOLS</h2>
-    <div className="skills-block">
-      <strong>Languages & Frameworks:</strong><br />
-      HTML5, CSS3, JavaScript (ES6), TypeScript, React, Next.js, Node.js, Express.js,<br />
-      Python, Django, PHP, MySQL, PostgreSQL, MongoDB, Supabase, Prisma,<br />
-      Mongoose, GraphQL, Zod, Vite, Webpack, Gulp, Tailwind CSS
-    </div>
-    <div className="skills-block">
-      <strong>Platforms & CMS:</strong><br />
-      WordPress, Drupal, Shopify, AEM, HubSpot, Salesforce, Veeva Vault, Airtable,<br />
-      Zapier, Docker, AWS, Kubernetes, DigitalOcean
-    </div>
-    <div className="skills-block">
-      <strong>Creative & AI Tools:</strong><br />
-      Adobe Premiere, After Effects, Illustrator, Photoshop, XD, Figma, DaVinci
-      Resolve, Ableton Live, Logic Pro, ChatGPT, OpenAI, MidJourney, VEO3, ComfyUI,
-      Runway
-    </div>
-    <div className="skills-block">
-      <strong>Ops & Project Tools:</strong><br />
-      Jira, Trello, Confluence, Slack, Google Workspace, Microsoft Office, Notion
-    </div>
-    <h2 className="skills-heading">SKILLS</h2>
-    <ul className="skills-list">
-    <li>Digital Production and Full-Stack Development</li>
-    <li>Technical Leadership and Cross-Functional Collaboration</li>
-    <li>Creative Direction and UI/UX Design</li>
-    <li>Prototyping and Agile Sprint Planning</li>
-    <li>AI-Integrated Workflows and Automation</li>
-    <li>eCommerce Implementation and CMS Engineering</li> 
-    <li>Sound Design and Post Production</li>
-    <li>AV System Setup and Engineering</li>
-    <li>QA Testing and Performance Optimization</li>
+  <div className="skills-section" style={{ maxWidth: '700px', margin: '0 auto', padding: '2.2rem 2.5rem' }}>
+    <h2 className="skills-heading">CORE SKILLS</h2>
+    <ul className="skills-list" style={{ fontSize: '1.15em', marginLeft: '1.2em' }}>
+      <li>Full-Stack Development &amp; Digital Production</li>
+      <li>Technical Leadership &amp; Cross-Functional Collaboration</li>
+      <li>Creative Direction &amp; UI/UX Design</li>
+      <li>Rapid Prototyping &amp; Agile Sprint Planning</li>
+      <li>AI-Integrated Workflows &amp; Automation</li>
+      <li>CMS Architecture &amp; eCommerce Implementation</li>
+      <li>Sound Design, Mixing &amp; Post Production</li>
+      <li>AV Systems Engineering &amp; Setup</li>
+      <li>QA Testing &amp; Performance Optimization</li>
     </ul>
+    <div style={{ borderTop: '1.5px solid #ffe259', margin: '2.2rem 0 1.5rem 0', opacity: 0.5 }} />
+    <h2 className="skills-heading">TECHNOLOGIES &amp; TOOLS</h2>
+    <div className="skills-block">
+      <strong>Languages &amp; Frameworks</strong><br />
+      HTML5, CSS3, JavaScript (ES6), TypeScript, Python, PHP<br />
+      React, Next.js, Node.js, Express.js, Django<br />
+      MySQL, PostgreSQL, MongoDB, Supabase, Prisma, Mongoose<br />
+      GraphQL, Zod, Vite, Webpack, Gulp, Tailwind CSS
+    </div>
+    <div className="skills-block">
+      <strong>Platforms &amp; CMS</strong><br />
+      WordPress, Drupal, Shopify, AEM, HubSpot, Salesforce, Veeva Vault<br />
+      Airtable, Zapier, Docker, AWS, Kubernetes, DigitalOcean
+    </div>
+    <div className="skills-block">
+      <strong>Version Control &amp; CLI</strong><br />
+      Git, GitHub, GitLab, Bitbucket<br />
+      Terminal/Bash, NPM, Yarn, Homebrew, Netlify CLI, Vercel CLI
+    </div>
+    <div className="skills-block">
+      <strong>Creative &amp; AI Tools</strong><br />
+      Adobe Premiere, After Effects, Illustrator, Photoshop, XD<br />
+      DaVinci Resolve, Figma, Ableton Live, Logic Pro<br />
+      ChatGPT, OpenAI, MidJourney, VEO3, ComfyUI, Runway
+    </div>
+    <div className="skills-block">
+      <strong>Project &amp; Ops Tools</strong><br />
+      Jira, Trello, Confluence, Notion<br />
+      Slack, Google Workspace, Microsoft Office
+    </div>
   </div>
 );
 

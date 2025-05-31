@@ -294,11 +294,17 @@ const LocationInsights: React.FC = () => {
         setHasMoved(true);
       } else if (resizing) {
         const dx = resizeStart.current.x - e.clientX;
-        setWidth(Math.max(200, resizeStart.current.width + dx));
-        setPosition(pos => {
-          setHasMoved(true);
-          return { ...((pos as any) || {}), x: resizeStart.current.x - dx, y: (pos ? pos.y : 0) };
-        });
+        const newWidth = Math.max(200, resizeStart.current.width + dx);
+        setWidth(newWidth);
+        
+        // Update position to maintain the right edge position
+        if (position) {
+          setPosition({
+            x: position.x - (newWidth - width),
+            y: position.y
+          });
+        }
+        setHasMoved(true);
       }
     };
     const handleMouseUp = () => {
@@ -335,9 +341,9 @@ const LocationInsights: React.FC = () => {
     if (nodeRef.current) {
       const rect = nodeRef.current.getBoundingClientRect();
       resizeStart.current = {
-        x: rect.left,
-        y: rect.bottom,
-        width,
+        x: e.clientX,
+        y: rect.top,
+        width: width,
       };
       setResizing(true);
     }

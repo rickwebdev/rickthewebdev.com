@@ -52,8 +52,7 @@ body, html {
 .large-text,
 .small-text-container,
 .summary,
-.icon-links,
-.location-insights {
+.icon-links {
   opacity: 0;
   transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: opacity;
@@ -61,7 +60,8 @@ body, html {
 
 /* When flex-container has fade-in, fade in all children */
 .flex-container.fade-in,
-.flex-container.fade-in * {
+.flex-container.fade-in *,
+.location-insights {
   opacity: 1 !important;
 }
 
@@ -698,6 +698,26 @@ body, html {
 .ideas-icon:hover i,
 .ideas-icon:focus i {
   color: #ffe259;
+}
+.ideas-icon i.highlight-yellow {
+  color: #ffe259 !important;
+  text-shadow: 0 0 12px #ffe25999, 0 0 4px #ffe25966;
+  animation: lightbulb-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes lightbulb-pulse {
+  0% {
+    color: #ffe259;
+    text-shadow: 0 0 12px #ffe25999, 0 0 4px #ffe25966;
+  }
+  50% {
+    color: #fffbe6;
+    text-shadow: 0 0 24px #ffe259cc, 0 0 12px #ffe25999;
+  }
+  100% {
+    color: #ffe259;
+    text-shadow: 0 0 12px #ffe25999, 0 0 4px #ffe25966;
+  }
 }
 
 /*————————————————————————

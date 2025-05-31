@@ -54,7 +54,7 @@ function App() {
         ) : (
           <IntroSection />
         )}
-        <Avatar onLightbulbClick={openBox} />
+        <Avatar onLightbulbClick={openBox} highlightLightbulb={boxOpen} />
       </div>
     </>
   );

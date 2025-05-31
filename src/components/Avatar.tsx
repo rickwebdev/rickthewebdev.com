@@ -2,9 +2,10 @@ import React, { useRef } from 'react';
 
 interface AvatarProps {
   onLightbulbClick?: () => void;
+  highlightLightbulb?: boolean;
 }
 
-const Avatar: React.FC<AvatarProps> = ({ onLightbulbClick }) => {
+const Avatar: React.FC<AvatarProps> = ({ onLightbulbClick, highlightLightbulb }) => {
   const avatarRef = useRef<HTMLImageElement>(null);
 
   const handleIconClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, url: string) => {
@@ -44,7 +45,7 @@ const Avatar: React.FC<AvatarProps> = ({ onLightbulbClick }) => {
             onClick={onLightbulbClick}
             type="button"
           >
-            <i className="fas fa-lightbulb"></i>
+            <i className={`fas fa-lightbulb${highlightLightbulb ? ' highlight-yellow' : ''}`}></i>
           </button>
         )}
         <a 

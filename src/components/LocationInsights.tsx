@@ -355,7 +355,8 @@ const LocationInsights: React.FC = () => {
         console.log('Attempting to fetch location data...');
         const response = await fetch('https://ipinfo.io/json', {
           headers: {
-            'Accept': 'application/json'
+            'Accept': 'application/json',
+            'Authorization': `Bearer ${import.meta.env.VITE_IPINFO_TOKEN}`
           }
         });
         
@@ -418,7 +419,7 @@ const LocationInsights: React.FC = () => {
         setLocationMessage(message);
       } catch (error: any) {
         console.error('Error fetching location:', error);
-        const fallbackMessage = 'The location API has reached its daily limit. Welcome to my portfolio! Thanks for visiting! ';
+        const fallbackMessage = 'The location API has reached its free daily limit. Sign up for an API token to get 50k requests/month. Welcome to my portfolio! Thanks for visiting! ';
         setLocationMessage(fallbackMessage);
       }
     };

@@ -18,6 +18,19 @@ const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
       url: "https://coastalluxepainting.com/"
     },
     {
+      id: 8,
+      title: "Website (SPA)",
+      subtitle: "UX, Dev, Design, Logo",
+      image: "/images/website8.png",
+      url: "https://taxexemptconsultants.com/"
+    },
+   { id: 12,
+    title: "Website",
+    subtitle: "UX, Dev",
+    image: "/images/website12.png",
+    url: "https://subtenantstudios.com/"
+  },
+    {
       id: 2,
       title: "Website",
       subtitle: "UX, Dev, Design, Logo",
@@ -31,25 +44,11 @@ const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
       url: "https://profusek.com/"
     },
     {
-      id: 8,
-      title: "Website",
-      subtitle: "UX, Dev, Design, Logo",
-      image: "/images/website8.png",
-      url: "https://taxexemptconsultants.com/"
-    },
-    {
       id: 3,
       title: "Website: Redesign",
       subtitle: "UX, Dev, Tech Lead",
       image: "/images/website3.png",
       url: "https://www.getrealaboutdiabetes.com/"
-    },
-    {
-      id: 4,
-      title: "Website: Functionality",
-      subtitle: "UX, Dev, Prototyping, Tech Lead",
-      image: "/images/website4.png",
-      url: "https://www.ozempic.com/faqs.html"
     },
     {
       id: 5,
@@ -68,7 +67,7 @@ const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
 
     {
       id: 10,
-      title: "Website",
+      title: "Website (SPA)",
       subtitle: "UX, Dev, Design",
       image: "/images/website10.png",
       url: "https://ifatknaankostman.com/"
@@ -82,7 +81,7 @@ const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
     },
     {
       id: 9,
-      title: "Web App",
+      title: "Web (SPA)",
       subtitle: "UX, Dev, Design",
       image: "/images/website9.png",
       url: "/"

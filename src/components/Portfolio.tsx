@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 interface WebsiteCard {
   id: number;
@@ -10,6 +10,13 @@ interface WebsiteCard {
 
 const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
   const websites: WebsiteCard[] = [
+    {
+      id: 0,
+      title: "Website",
+      subtitle: "UX, Dev, Design, Logo, CMS, Custom Wordpress Theme",
+      image: "/images/website0.png",
+      url: "https://demarchelierrestaurant.com/"
+    },
     {
       id: 1,
       title: "Website",
@@ -30,6 +37,13 @@ const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
     image: "/images/website12.png",
     url: "https://subtenantstudios.com/"
   },
+  {
+    id: 6,
+    title: "Web Application: Just for Fun",
+    subtitle: "UX, Dev",
+    image: "/images/website6.png",
+    url: "https://rickthewebdev.com/magic-8-ball/"
+  },
     {
       id: 2,
       title: "Website",
@@ -39,16 +53,16 @@ const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
     }, {
       id: 7,
       title: "Website",
-      subtitle: "UX, Dev, Design, CMS",
+      subtitle: "UX, Dev, Design, CMS, Custom Wordpress Theme",
       image: "/images/website7.png",
       url: "https://profusek.com/"
     },
     {
       id: 3,
       title: "Website: Redesign",
-      subtitle: "UX, Dev, Tech Lead",
+      subtitle: "UX, Dev, Tech Lead [This site is no longer live, but you can view an archived version on the Wayback Machine.",
       image: "/images/website3.png",
-      url: "https://www.getrealaboutdiabetes.com/"
+      url: "https://web.archive.org/web/20250523084922/https://www.getrealaboutdiabetes.com/"
     },
     {
       id: 5,
@@ -57,14 +71,6 @@ const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
       image: "/images/website5.png",
       url: "https://www.ozempic.com/lifestyle-tips/healthy-eating.html"
     },
-    {
-      id: 6,
-      title: "Web Application: Just for Fun",
-      subtitle: "UX, Dev",
-      image: "/images/website6.png",
-      url: "https://rickthewebdev.com/magic-8-ball/"
-    },
-
     {
       id: 10,
       title: "Website (SPA)",
@@ -89,20 +95,12 @@ const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
   ]
 
   const [imagesLoaded, setImagesLoaded] = useState(0);
-  const [isFirstLoad, setIsFirstLoad] = useState(true);
   const totalImages = websites.length;
   const allLoaded = imagesLoaded === totalImages;
 
   const handleImageLoad = () => {
     setImagesLoaded((prev) => prev + 1);
   };
-
-  // Reset first load state when component unmounts
-  useEffect(() => {
-    return () => {
-      setIsFirstLoad(false);
-    };
-  }, []);
 
   return (
     <div className="portfolio-container" style={{ position: 'relative' }}>
@@ -113,7 +111,7 @@ const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
           <div className="spinner"></div>
         </div>
       )}
-      <div className={`portfolio-grid ${allLoaded ? 'grid-loaded' : ''} ${!isFirstLoad ? 'no-animation' : ''}`}>
+      <div className={`portfolio-grid ${allLoaded ? 'grid-loaded' : ''}`}>
         {websites.map((website) => (
           <a 
             key={website.id} 

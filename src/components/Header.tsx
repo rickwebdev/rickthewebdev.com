@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Portfolio from './Portfolio';
+import ContactForm from './ContactForm';
 
 const skillsText = (
   <div className="skills-section" style={{ maxWidth: '700px', margin: '0 auto', padding: '2.2rem 2.5rem' }}>
@@ -9,7 +10,7 @@ const skillsText = (
       <li>Technical Leadership &amp; Cross-Functional Collaboration</li>
       <li>Creative Direction &amp; UI/UX Design</li>
       <li>Rapid Prototyping &amp; Agile Sprint Planning</li>
-      <li>AI-Integrated Workflows &amp; Automation</li>
+      <li>AI Workflow Design &amp; Automation (n8n, Zapier, Airtable)</li>
       <li>CMS Architecture &amp; eCommerce Implementation</li>
       <li>QA Testing, Web Performance &amp; Optimization</li>
       <li>Sound Design, Mixing &amp; Post-Production</li>
@@ -27,7 +28,11 @@ const skillsText = (
     <div className="skills-block">
       <strong>Platforms &amp; CMS</strong><br />
       WordPress, Drupal, Shopify, AEM, HubSpot, Salesforce, Veeva Vault<br />
-      Airtable, Zapier, Docker, AWS, Kubernetes, DigitalOcean
+      Airtable, Docker, AWS, Kubernetes, DigitalOcean
+    </div>
+    <div className="skills-block">
+      <strong>Automation &amp; Integration Tools</strong><br />
+      n8n, Zapier, Make (Integromat), Airtable Automations, OpenAI API, REST APIs, Webhooks
     </div>
     <div className="skills-block">
       <strong>Version Control &amp; CLI</strong><br />
@@ -53,7 +58,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ onClose }) => {
-  const [activeTab, setActiveTab] = useState<'work' | 'skills'>('work');
+  const [activeTab, setActiveTab] = useState<'work' | 'skills' | 'contact'>('work');
 
   return (
     <div className="box">
@@ -74,16 +79,28 @@ const Header: React.FC<HeaderProps> = ({ onClose }) => {
           >
             SKILLS
           </button>
+          <span className="portfolio-nav-sep">|</span>
+          <button
+            className={`portfolio-nav-btn${activeTab === 'contact' ? ' active' : ''}`}
+            onClick={() => setActiveTab('contact')}
+            type="button"
+          >
+            CONTACT
+          </button>
         </div>
         {onClose && (
           <button className="box-close-btn" onClick={onClose} aria-label="Close" type="button">×</button>
         )}
       </nav>
+      <div className="tab-content">
       {activeTab === 'work' ? (
         <Portfolio hideTitle />
+        ) : activeTab === 'skills' ? (
+          skillsText
       ) : (
-        skillsText
+          <ContactForm />
       )}
+      </div>
     </div>
   );
 };

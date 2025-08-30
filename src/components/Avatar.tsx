@@ -22,8 +22,16 @@ const Avatar: React.FC<AvatarProps> = ({ onLightbulbClick, highlightLightbulb })
     }
   };
 
+  const handleAvatarClick = (e: React.MouseEvent<HTMLImageElement, MouseEvent>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (onLightbulbClick) {
+      onLightbulbClick();
+    }
+  };
+
   return (
-    <div className="avatar-container">
+    <div className="avatar-container" onClick={handleAvatarClick} style={{ cursor: 'pointer' }}>
       <img 
         ref={avatarRef}
         src="/images/avatar_linkedin.jpeg" 

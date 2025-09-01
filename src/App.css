@@ -1224,6 +1224,7 @@ body, html {
   flex-direction: column;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
+  background: rgba(0, 0, 0, 0.4);
 }
 
 .tab-content::-webkit-scrollbar {

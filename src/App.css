@@ -989,6 +989,12 @@ body, html {
   display: flex;
   flex-direction: column;
   position: relative;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.portfolio-container::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 .portfolio-title {
   font-size: 3vw;
@@ -1216,6 +1222,12 @@ body, html {
   padding: 2rem;
   display: flex;
   flex-direction: column;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.tab-content::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 /* Intro content container */
@@ -1245,22 +1257,11 @@ body, html {
   max-height: none;
   width: 100%;
   box-sizing: border-box;
-  scrollbar-width: thin; /* Firefox */
-  scrollbar-color: rgba(255, 255, 255, 0.3) transparent; /* Firefox */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
 }
 .skills-section::-webkit-scrollbar {
-  width: 8px;
-  display: block;
-}
-.skills-section::-webkit-scrollbar-track {
-  background: transparent;
-}
-.skills-section::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.3);
-  border-radius: 4px;
-}
-.skills-section::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(255, 255, 255, 0.5);
+  display: none; /* Chrome, Safari, Opera */
 }
 .skills-heading {
   font-size: 1.5vw;

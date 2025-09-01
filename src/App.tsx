@@ -3,15 +3,20 @@ import Header from './components/Header';
 import Avatar from './components/Avatar';
 import LocationInsights from './components/LocationInsights';
 import IntroSection from './components/IntroSection';
+import KonamiCode from './components/KonamiCode';
+import TetrisEasterEgg from './components/TetrisEasterEgg';
 import './App.css';
 
 function App() {
   const [boxOpen, setBoxOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isFadedIn, setIsFadedIn] = useState(false);
+  const [tetrisOpen, setTetrisOpen] = useState(false);
 
   const openBox = () => setBoxOpen(true);
   const closeBox = () => setBoxOpen(false);
+  const openTetris = () => setTetrisOpen(true);
+  const closeTetris = () => setTetrisOpen(false);
 
   useEffect(() => {
     // Create a new image object to preload the background
@@ -56,6 +61,12 @@ function App() {
         )}
         <Avatar onLightbulbClick={openBox} highlightLightbulb={boxOpen} />
       </div>
+      
+      {/* Konami Code Easter Egg */}
+      <KonamiCode onActivate={openTetris} />
+      
+      {/* Tetris Easter Egg */}
+      <TetrisEasterEgg isOpen={tetrisOpen} onClose={closeTetris} />
     </>
   );
 }

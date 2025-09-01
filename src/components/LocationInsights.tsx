@@ -414,12 +414,15 @@ const LocationInsights: React.FC = () => {
           }
         }
         
-        message = `${message} • `.repeat(3);
+        message = `${message} • `.repeat(1);
+        
+        // Add a fun riddle hinting at the Konami code easter egg
+        message += ` 🎮 If you made it this far, there's a hidden secret! Try pressing: Up Up Down Down Left Right Left Right B A • `;
         
         setLocationMessage(message);
       } catch (error: any) {
         console.error('Error fetching location:', error);
-        const fallbackMessage = 'The location API has reached its free daily limit. Sign up for an API token to get 50k requests/month. Welcome to my portfolio! Thanks for visiting! ';
+        const fallbackMessage = 'The location API has reached its free daily limit. Sign up for an API token to get 50k requests/month. Welcome to my portfolio! Thanks for visiting! 🎮 If you made it this far, there\'s a hidden secret! Try pressing: Up Up Down Down Left Right Left Right B A • ';
         setLocationMessage(fallbackMessage);
       }
     };

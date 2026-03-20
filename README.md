@@ -13,7 +13,12 @@ The site loads Work and Skills from Sanity when `VITE_SANITY_PROJECT_ID` is set.
    - `VITE_SANITY_DATASET` (default `production`)
    - `VITE_SANITY_READ_TOKEN` only if the dataset is not public
    - `VITE_IPINFO_TOKEN` if you use Location Insights
-4. In [Sanity manage](https://www.sanity.io/manage) → **API** → **CORS origins**, add your Vercel URL(s), e.g. `https://your-project.vercel.app` and your custom domain.
+4. In [Sanity manage](https://www.sanity.io/manage) → **API** → **CORS origins**, add every origin the **browser** uses, including:
+   - `https://your-domain.com` **and** `https://www.your-domain.com` if you use both (CORS is exact-match).
+   - `https://*.vercel.app` or each preview URL for Preview deployments.
+5. **Content must be published:** API calls use the **published** perspective; drafts do not appear until you **Publish** in Studio.
+
+**If the live site shows bundled fallback copy:** open DevTools → Console on production. You should see either `[Sanity] VITE_SANITY_PROJECT_ID is present in this build` or a warning that the id was missing (then fix Vercel env and **redeploy**). Other `[Sanity]` lines explain empty datasets vs network/CORS errors.
 
 Sanity Studio in `sanity/` is optional on Vercel; host it with [`sanity deploy`](./sanity/README.md) or run locally.
 

@@ -1,5 +1,11 @@
 import { sanityClient, urlForImage } from './sanity';
 
+function warnSanity(context: string, err: unknown) {
+  const msg =
+    err instanceof Error ? err.message : typeof err === 'string' ? err : JSON.stringify(err);
+  console.warn(`[Sanity] ${context}:`, msg);
+}
+
 const portfolioQuery = `{
   "projects": *[_type == "workProject"] | order(sortOrder asc) {
     _id,
@@ -97,7 +103,12 @@ export async function fetchPortfolioFromSanity(): Promise<{
       {},
       { perspective: 'published' },
     );
-    if (!data?.projects?.length && !data?.cases?.length) return null;
+    if (!data?.projects?.length && !data?.cases?.length) {
+      console.warn(
+        '[Sanity] No published workProject or caseStudy documents (drafts are ignored until you Publish).',
+      );
+      return null;
+    }
 
     const websites: WebsiteCard[] = (data.projects || []).map((p, index) => ({
       key: p._id,
@@ -122,7 +133,8 @@ export async function fetchPortfolioFromSanity(): Promise<{
     }));
 
     return { websites, caseStudies };
-  } catch {
+  } catch (err) {
+    warnSanity('fetchPortfolioFromSanity', err);
     return null;
   }
 }
@@ -138,7 +150,8 @@ export async function fetchResumePdfUrl(): Promise<string | null> {
     );
     const url = row?.url?.trim();
     return url || null;
-  } catch {
+  } catch (err) {
+    warnSanity('fetchResumePdfUrl', err);
     return null;
   }
 }
@@ -155,6 +168,9 @@ export async function fetchSkillsFromSanity(): Promise<SkillsContentData | null>
       !doc ||
       (!doc.coreSkills?.length && !doc.toolSections?.length)
     ) {
+      console.warn(
+        '[Sanity] skillsPage missing or empty in published dataset (id skillsPage, or drafts not published).',
+      );
       return null;
     }
     return {
@@ -166,7 +182,8 @@ export async function fetchSkillsFromSanity(): Promise<SkillsContentData | null>
         body: s.body || '',
       })),
     };
-  } catch {
+  } catch (err) {
+    warnSanity('fetchSkillsFromSanity', err);
     return null;
   }
 }

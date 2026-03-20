@@ -1,5 +1,24 @@
 # React + TypeScript + Vite
 
+## Sanity (Work + Skills)
+
+The site loads Work and Skills from Sanity when `VITE_SANITY_PROJECT_ID` is set. Copy [`.env.example`](./.env.example) to `.env` in the **repo root** (Studio still uses `sanity/.env`). In [sanity.io/manage](https://www.sanity.io/manage) → API → CORS origins, add `http://localhost:5173` for local dev. If those vars are missing, the app uses bundled fallback content.
+
+## Deploy on Vercel
+
+1. **Import** [rickwebdev/rickthewebdev.com](https://github.com/rickwebdev/rickthewebdev.com) as a new project (root directory: repo root).
+2. **Framework:** Vite (auto-detected). **Build:** `npm run build` → **Output:** `dist`.
+3. **Environment variables** (Production / Preview as needed), mirroring [`.env.example`](./.env.example):
+   - `VITE_SANITY_PROJECT_ID` (required for live CMS content)
+   - `VITE_SANITY_DATASET` (default `production`)
+   - `VITE_SANITY_READ_TOKEN` only if the dataset is not public
+   - `VITE_IPINFO_TOKEN` if you use Location Insights
+4. In [Sanity manage](https://www.sanity.io/manage) → **API** → **CORS origins**, add your Vercel URL(s), e.g. `https://your-project.vercel.app` and your custom domain.
+
+Sanity Studio in `sanity/` is optional on Vercel; host it with [`sanity deploy`](./sanity/README.md) or run locally.
+
+---
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

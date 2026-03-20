@@ -1,0 +1,28 @@
+{
+  "name": "rickthewebdev-studio",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "main": "package.json",
+  "scripts": {
+    "dev": "node -r dotenv/config ./node_modules/sanity/bin/sanity dev",
+    "studio": "node -r dotenv/config ./node_modules/sanity/bin/sanity dev",
+    "start": "node -r dotenv/config ./node_modules/sanity/bin/sanity dev",
+    "build": "node -r dotenv/config ./node_modules/sanity/bin/sanity build",
+    "deploy": "node -r dotenv/config ./node_modules/sanity/bin/sanity deploy",
+    "migrate": "node -r dotenv/config ./scripts/seed-from-repo.mjs"
+  },
+  "dependencies": {
+    "@sanity/vision": "^3.68.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sanity": "^3.68.0",
+    "styled-components": "^6.3.12"
+  },
+  "devDependencies": {
+    "@sanity/client": "^6.29.1",
+    "@types/react": "^18.3.12",
+    "dotenv": "^16.6.1",
+    "typescript": "^5.6.3"
+  }
+}

@@ -1,4 +1,8 @@
-const IntroSection: React.FC = () => (
+interface IntroSectionProps {
+  onAboutSite?: () => void;
+}
+
+const IntroSection: React.FC<IntroSectionProps> = ({ onAboutSite }) => (
   <div className="intro-section box">
     <div className="intro-content">
       <div className="large-text">RICK</div>
@@ -16,6 +20,13 @@ const IntroSection: React.FC = () => (
       <div className="summary">
       I’m Rick Owadally, a creative technologist, digital producer, and consultant. I work directly with business owners to design and build digital-first experiences that bring their brand to life. From creative direction and branding to web development and automation, I combine strategy and execution to deliver solutions that are functional, scalable, and memorable.
       </div>
+      {onAboutSite && (
+        <div className="intro-about-wrap">
+          <button type="button" className="intro-about-btn" onClick={onAboutSite}>
+            About this site
+          </button>
+        </div>
+      )}
     </div>
   </div>
 );

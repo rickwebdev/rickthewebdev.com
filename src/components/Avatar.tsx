@@ -1,4 +1,8 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { fetchResumePdfUrl } from '../lib/fetchSiteContent';
+import { sanityConfigured } from '../lib/sanity';
+
+const FALLBACK_RESUME_PDF = '/ricko_resume.pdf';
 
 interface AvatarProps {
   onLightbulbClick?: () => void;
@@ -7,6 +11,18 @@ interface AvatarProps {
 
 const Avatar: React.FC<AvatarProps> = ({ onLightbulbClick, highlightLightbulb }) => {
   const avatarRef = useRef<HTMLImageElement>(null);
+  const [resumePdfUrl, setResumePdfUrl] = useState(FALLBACK_RESUME_PDF);
+
+  useEffect(() => {
+    if (!sanityConfigured) return;
+    let cancelled = false;
+    fetchResumePdfUrl().then((url) => {
+      if (!cancelled && url) setResumePdfUrl(url);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   const handleIconClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, url: string) => {
     e.preventDefault();
@@ -66,11 +82,11 @@ const Avatar: React.FC<AvatarProps> = ({ onLightbulbClick, highlightLightbulb })
           <i className="fab fa-linkedin"></i>
         </a>
         <a 
-          href="/ricko_resume.pdf" 
+          href={resumePdfUrl} 
           target="_blank" 
           rel="noopener noreferrer" 
           className="pdf-icon"
-          onClick={e => handleIconClick(e, '/ricko_resume.pdf')}
+          onClick={(e) => handleIconClick(e, resumePdfUrl)}
         >
           <i className="fas fa-file-pdf"></i>
         </a>

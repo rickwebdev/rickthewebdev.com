@@ -5,9 +5,12 @@ import LocationInsights from './components/LocationInsights';
 import IntroSection from './components/IntroSection';
 import KonamiCode from './components/KonamiCode';
 import TetrisEasterEgg from './components/TetrisEasterEgg';
+import { SiteStackModal } from './components/SiteStackModal';
 import './App.css';
+import { sanityConfigured } from './lib/sanity';
 
 function App() {
+  const [siteStackOpen, setSiteStackOpen] = useState(false);
   const [boxOpen, setBoxOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isFadedIn, setIsFadedIn] = useState(false);
@@ -41,6 +44,14 @@ function App() {
     };
   }, []);
 
+  useEffect(() => {
+    if (import.meta.env.DEV && !sanityConfigured) {
+      console.info(
+        '[Sanity] WORK/SKILLS use bundled fallback — add VITE_SANITY_PROJECT_ID to .env in the repo root (not sanity/) and restart `npm run dev`.',
+      );
+    }
+  }, []);
+
   return (
     <>
       {/* Site preloader */}
@@ -57,7 +68,7 @@ function App() {
         {boxOpen ? (
           <Header onClose={closeBox} />
         ) : (
-          <IntroSection />
+          <IntroSection onAboutSite={() => setSiteStackOpen(true)} />
         )}
         <Avatar onLightbulbClick={openBox} highlightLightbulb={boxOpen} />
       </div>
@@ -67,6 +78,8 @@ function App() {
       
       {/* Tetris Easter Egg */}
       <TetrisEasterEgg isOpen={tetrisOpen} onClose={closeTetris} />
+
+      <SiteStackModal open={siteStackOpen} onClose={() => setSiteStackOpen(false)} />
     </>
   );
 }

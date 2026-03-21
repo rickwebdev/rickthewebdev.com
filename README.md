@@ -22,6 +22,21 @@ The site loads Work and Skills from Sanity when `VITE_SANITY_PROJECT_ID` is set.
 
 Sanity Studio in `sanity/` is optional on Vercel; host it with [`sanity deploy`](./sanity/README.md) or run locally.
 
+## Contact form (Gmail SMTP)
+
+The CONTACT tab posts to **`/api/contact`**, a Vercel serverless function that sends mail through **Gmail’s SMTP** ([nodemailer](https://nodemailer.com/)). No Resend or extra DNS for email. It replaces the old PHP handler (`public_html/api/contact.php`).
+
+1. **Google Account** → enable **2-Step Verification**, then create an **[App password](https://myaccount.google.com/apppasswords)** (select “Mail” / “Other” → name it e.g. `portfolio`). Use that 16-character value — **not** your normal Gmail password.
+2. **Vercel env** (Production / Preview as needed; never `VITE_*`):
+   - `SMTP_USER` — your Gmail address (e.g. `you@gmail.com`)
+   - `SMTP_PASS` — the app password (spaces optional; we strip them)
+   - `CONTACT_TO_EMAIL` — optional; where to deliver (defaults to `SMTP_USER` if omitted)
+3. **Redeploy** after setting env.
+
+Gmail has its own [sending limits](https://support.google.com/a/answer/166852) (higher than typical free transactional tiers for personal use). If Google blocks “less secure” access, app passwords are the supported path.
+
+**Local testing:** plain `npm run dev` does not run Vercel functions. Use **`npx vercel dev`** from the repo root to exercise `/api/contact` locally (e.g. `.env.local` with the same vars).
+
 ---
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

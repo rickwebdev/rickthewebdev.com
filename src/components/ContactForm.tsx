@@ -31,7 +31,7 @@ const ContactForm: React.FC = () => {
     setSubmitStatus('idle');
 
     try {
-      const response = await fetch('/api/contact.php', {
+      const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -45,7 +45,7 @@ const ContactForm: React.FC = () => {
       } else {
         setSubmitStatus('error');
       }
-    } catch (error) {
+    } catch {
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);

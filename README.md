@@ -22,20 +22,40 @@ The site loads Work and Skills from Sanity when `VITE_SANITY_PROJECT_ID` is set.
 
 Sanity Studio in `sanity/` is optional on Vercel; host it with [`sanity deploy`](./sanity/README.md) or run locally.
 
-## Contact form (Gmail SMTP)
+## Contact form (SMTP via Vercel function)
 
-The CONTACT tab posts to **`/api/contact`**, a Vercel serverless function that sends mail through **Gmail’s SMTP** ([nodemailer](https://nodemailer.com/)). No Resend or extra DNS for email. It replaces the old PHP handler (`public_html/api/contact.php`).
+The CONTACT tab posts to **`/api/contact`**, a serverless handler using [nodemailer](https://nodemailer.com/). It replaces the old PHP handler (`public_html/api/contact.php`).
 
-1. **Google Account** → enable **2-Step Verification**, then create an **[App password](https://myaccount.google.com/apppasswords)** (select “Mail” / “Other” → name it e.g. `portfolio`). Use that 16-character value — **not** your normal Gmail password.
-2. **Vercel env** (Production / Preview as needed; never `VITE_*`):
-   - `SMTP_USER` — your Gmail address (e.g. `you@gmail.com`)
-   - `SMTP_PASS` — the app password (spaces optional; we strip them)
-   - `CONTACT_TO_EMAIL` — optional; where to deliver (defaults to `SMTP_USER` if omitted)
-3. **Redeploy** after setting env.
+### Env (never `VITE_*`)
 
-Gmail has its own [sending limits](https://support.google.com/a/answer/166852) (higher than typical free transactional tiers for personal use). If Google blocks “less secure” access, app passwords are the supported path.
+| Variable | Purpose |
+|----------|--------|
+| `SMTP_USER` | Login for SMTP (Gmail address, or Brevo login email, etc.) |
+| `SMTP_PASS` | App password (Gmail) or SMTP key (Brevo, etc.) |
+| `CONTACT_TO_EMAIL` | Optional; inbox for submissions (defaults to `SMTP_USER`) |
+| `SMTP_HOST` | Optional. If unset, Gmail (`smtp.gmail.com`) is used with ports 465 then 587. |
+| `SMTP_PORT` | With `SMTP_HOST`, default `587` |
+| `SMTP_SECURE` | With `SMTP_HOST`, set `true` only for port 465-style SSL |
+| `SMTP_DEBUG` | Set `1` temporarily to include SMTP error text in the JSON response (remove after debugging) |
 
-**Local testing:** plain `npm run dev` does not run Vercel functions. Use **`npx vercel dev`** from the repo root to exercise `/api/contact` locally (e.g. `.env.local` with the same vars).
+### Gmail from Vercel
+
+Use a **[Gmail app password](https://myaccount.google.com/apppasswords)** (requires 2FA), not your normal password. **Google often rejects SMTP from cloud datacenters** (including Vercel). If submissions still fail, check **Vercel → Deployment → Functions → `/api/contact` logs**, or set **`SMTP_DEBUG=1`** and redeploy to see the error in the network response.
+
+### Reliable alternative: Brevo (free SMTP)
+
+1. Sign up at [Brevo](https://www.brevo.com/) → **SMTP & API** → create an SMTP key.
+2. Vercel env:
+
+   - `SMTP_HOST=smtp-relay.brevo.com`
+   - `SMTP_PORT=587`
+   - `SMTP_SECURE=false`
+   - `SMTP_USER` = your Brevo account login email
+   - `SMTP_PASS` = the SMTP key
+
+3. Redeploy.
+
+**Local testing:** use **`npx vercel dev`** (plain `npm run dev` does not run `/api`).
 
 ---
 

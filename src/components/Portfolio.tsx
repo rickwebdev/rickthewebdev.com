@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { fetchPortfolioFromSanity } from '../lib/fetchSiteContent';
-import type { CaseStudy, WebsiteCard } from '../lib/fetchSiteContent';
-import { FALLBACK_CASE_STUDIES, FALLBACK_WEBSITES } from '../data/portfolioFallback';
+import type { WebsiteCard } from '../lib/fetchSiteContent';
+import { FALLBACK_WEBSITES } from '../data/portfolioFallback';
 import { sanityConfigured } from '../lib/sanity';
 import CmsSpinnerSlot from './CmsSpinnerSlot';
 
@@ -9,14 +9,14 @@ function isExternalUrl(url: string): boolean {
   return /^https?:\/\//i.test(url);
 }
 
+const REVEAL_THRESHOLD = 6;
+
 const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
   const [websites, setWebsites] = useState<WebsiteCard[]>(() =>
     sanityConfigured ? [] : FALLBACK_WEBSITES,
   );
-  const [caseStudies, setCaseStudies] = useState<CaseStudy[]>(() =>
-    sanityConfigured ? [] : FALLBACK_CASE_STUDIES,
-  );
   const [cmsReady, setCmsReady] = useState(!sanityConfigured);
+  const gridRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!sanityConfigured) return;
@@ -26,17 +26,15 @@ const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
         if (cancelled) return;
         if (data && (data.websites.length > 0 || data.caseStudies.length > 0)) {
           if (data.websites.length > 0) setWebsites(data.websites);
-          if (data.caseStudies.length > 0) setCaseStudies(data.caseStudies);
+          else setWebsites(FALLBACK_WEBSITES);
         } else {
           setWebsites(FALLBACK_WEBSITES);
-          setCaseStudies(FALLBACK_CASE_STUDIES);
         }
         setCmsReady(true);
       })
       .catch(() => {
         if (!cancelled) {
           setWebsites(FALLBACK_WEBSITES);
-          setCaseStudies(FALLBACK_CASE_STUDIES);
           setCmsReady(true);
         }
       });
@@ -46,14 +44,10 @@ const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
   }, []);
 
   const [imagesLoaded, setImagesLoaded] = useState(0);
-  const [showAllProjects, setShowAllProjects] = useState(false);
 
   useEffect(() => {
     setImagesLoaded(0);
-  }, [websites, caseStudies]);
-
-  const displayedProjects = showAllProjects ? websites : websites.slice(0, 6);
-  const hasMoreProjects = websites.length > 6;
+  }, [websites]);
 
   const imagesToWait = Math.min(6, websites.length);
   const allLoaded =
@@ -63,9 +57,43 @@ const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
     setImagesLoaded((prev) => prev + 1);
   };
 
-  const toggleShowMore = () => {
-    setShowAllProjects(!showAllProjects);
-  };
+  useEffect(() => {
+    if (!allLoaded || websites.length <= REVEAL_THRESHOLD) return;
+
+    const root = gridRef.current;
+    if (!root) return;
+
+    const pending = root.querySelectorAll<HTMLElement>('.website-card--reveal-pending');
+    if (pending.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const incoming = entries.filter(
+          (e) => e.isIntersecting && e.target instanceof HTMLElement,
+        );
+        if (incoming.length === 0) return;
+
+        incoming.sort(
+          (a, b) =>
+            Number((a.target as HTMLElement).dataset.revealSlot) -
+            Number((b.target as HTMLElement).dataset.revealSlot),
+        );
+
+        incoming.forEach((entry, i) => {
+          const el = entry.target as HTMLElement;
+          window.setTimeout(() => {
+            el.classList.add('website-card--reveal-visible');
+            observer.unobserve(el);
+          }, i * 80);
+        });
+      },
+      { threshold: 0.12, rootMargin: '0px 0px 8% 0px' },
+    );
+
+    pending.forEach((el) => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, [allLoaded, websites]);
 
   if (sanityConfigured && !cmsReady) {
     return (
@@ -92,15 +120,23 @@ const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
             <CmsSpinnerSlot />
           </>
         )}
-        <div className={`portfolio-grid ${allLoaded ? 'grid-loaded' : ''}`}>
-          {displayedProjects.map((website) => {
+        <div ref={gridRef} className={`portfolio-grid ${allLoaded ? 'grid-loaded' : ''}`}>
+          {websites.map((website, index) => {
             const ext = isExternalUrl(website.url);
+            const revealLater = index >= REVEAL_THRESHOLD;
             return (
               <a
                 key={website.key}
                 href={website.url}
                 {...(ext ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                className="website-card"
+                className={
+                  revealLater
+                    ? 'website-card website-card--reveal-pending'
+                    : 'website-card'
+                }
+                {...(revealLater
+                  ? { 'data-reveal-slot': String(index - REVEAL_THRESHOLD) }
+                  : {})}
               >
                 <img
                   src={website.image}
@@ -116,81 +152,6 @@ const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
                   <p>{website.subtitle}</p>
                 </div>
               </a>
-            );
-          })}
-        </div>
-
-        {hasMoreProjects && (
-          <div className="show-more-container">
-            <button className="show-more-btn" type="button" onClick={toggleShowMore}>
-              {showAllProjects ? 'Show Less' : 'Show More'}
-            </button>
-          </div>
-        )}
-      </div>
-
-      <div className="case-studies-section">
-        <h2 className="case-studies-title">Case Studies</h2>
-        <p className="case-studies-subtitle">
-          Deep dives into strategic thinking and measurable results
-        </p>
-
-        <div className="case-studies-grid">
-          {caseStudies.map((study) => {
-            const ext = isExternalUrl(study.url);
-            return (
-              <div key={study.key} className="case-study-card">
-                <div className="case-study-image">
-                  <img
-                    src={study.image}
-                    alt={study.title}
-                    className="case-study-thumbnail"
-                  />
-                </div>
-
-                <div className="case-study-content">
-                  <h3 className="case-study-title">{study.title}</h3>
-                  <p className="case-study-client">
-                    <strong>Client:</strong> {study.client}
-                  </p>
-
-                  <div className="case-study-details">
-                    <div className="case-study-section">
-                      <h4>Challenge</h4>
-                      <p>{study.challenge}</p>
-                    </div>
-
-                    <div className="case-study-section">
-                      <h4>Solution</h4>
-                      <p>{study.solution}</p>
-                    </div>
-
-                    <div className="case-study-section">
-                      <h4>Results</h4>
-                      <p>{study.results}</p>
-                    </div>
-                  </div>
-
-                  <div className="case-study-technologies">
-                    <h4>Technologies & Skills</h4>
-                    <div className="tech-tags">
-                      {study.technologies.map((tech, index) => (
-                        <span key={index} className="tech-tag">
-                          {tech}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-
-                  <a
-                    href={study.url}
-                    {...(ext ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                    className="case-study-link"
-                  >
-                    View Project →
-                  </a>
-                </div>
-              </div>
             );
           })}
         </div>

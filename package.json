@@ -11,7 +11,8 @@
     "studio": "npm run dev --prefix sanity",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "export:sanity": "node --env-file=.env scripts/export-sanity-content.mjs"
   },
   "dependencies": {
     "@sanity/client": "^6.29.1",

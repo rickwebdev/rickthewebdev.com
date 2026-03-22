@@ -13,6 +13,7 @@
     "migrate": "node -r dotenv/config ./scripts/seed-from-repo.mjs"
   },
   "dependencies": {
+    "@sanity/orderable-document-list": "^1.5.1",
     "@sanity/vision": "^3.68.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",

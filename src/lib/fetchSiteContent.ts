@@ -7,15 +7,16 @@ function warnSanity(context: string, err: unknown) {
 }
 
 const portfolioQuery = `{
-  "projects": *[_type == "workProject"] | order(sortOrder asc) {
+  "projects": *[_type == "workProject"] | order(orderRank asc, sortOrder asc) {
     _id,
     title,
     subtitle,
     url,
+    orderRank,
     sortOrder,
     image
   },
-  "cases": *[_type == "caseStudy"] | order(sortOrder asc) {
+  "cases": *[_type == "caseStudy"] | order(orderRank asc, sortOrder asc) {
     _id,
     title,
     client,
@@ -24,6 +25,7 @@ const portfolioQuery = `{
     results,
     technologies,
     url,
+    orderRank,
     sortOrder,
     image
   }
@@ -75,6 +77,7 @@ interface PortfolioQueryResult {
     title?: string;
     subtitle?: string;
     url?: string;
+    orderRank?: string;
     sortOrder?: number;
     image?: unknown;
   }[];
@@ -87,6 +90,7 @@ interface PortfolioQueryResult {
     results?: string;
     technologies?: string[];
     url?: string;
+    orderRank?: string;
     sortOrder?: number;
     image?: unknown;
   }[];
@@ -112,7 +116,7 @@ export async function fetchPortfolioFromSanity(): Promise<{
 
     const websites: WebsiteCard[] = (data.projects || []).map((p, index) => ({
       key: p._id,
-      id: typeof p.sortOrder === 'number' ? p.sortOrder : index,
+      id: index,
       title: p.title ?? '',
       subtitle: p.subtitle ?? '',
       url: p.url ?? '',
@@ -121,7 +125,7 @@ export async function fetchPortfolioFromSanity(): Promise<{
 
     const caseStudies: CaseStudy[] = (data.cases || []).map((c, index) => ({
       key: c._id,
-      id: typeof c.sortOrder === 'number' ? c.sortOrder : index + 1,
+      id: index + 1,
       title: c.title ?? '',
       client: c.client ?? '',
       challenge: c.challenge ?? '',

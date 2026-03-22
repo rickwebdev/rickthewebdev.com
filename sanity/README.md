@@ -30,8 +30,8 @@ Content for **Work** (project grid + case studies) and **Skills**.
 
 | Type           | Use |
 |----------------|-----|
-| **Work project** | Cards on the WORK grid (title, subtitle, URL, image, sort order). |
-| **Case study**   | Long-form case studies (challenge / solution / results, tags, image, URL). |
+| **Work project** | Cards on the WORK grid. **Order:** open **Work projects** in the desk and **drag and drop** (uses `orderRank`). First time, use **Reset order** in that list’s menu if cards look wrong. Legacy `sortOrder` is hidden but still used as a fallback in API queries. |
+| **Case study**   | Same ordering model under **Case studies** (drag and drop). |
 | **Skills page**  | Single document (fixed id `skillsPage`): core skill lines + labeled technology blocks. |
 | **Resume PDF**   | Single document (fixed id `resumePdf`): upload a PDF; the site’s résumé link uses it (falls back to `/ricko_resume.pdf` if missing). |
 
@@ -51,7 +51,7 @@ Pushes WORK + SKILLS content (mirrored in `scripts/seed-from-repo.mjs` from `Por
 
 ## Deploy Studio (optional)
 
-Host the editor at `*.sanity.studio`:
+Host the editor at `*.sanity.studio` (this project defaults to **`https://rickthewebdev.sanity.studio`** — see `studioHost` in `sanity.cli.ts`):
 
 ```bash
 npx sanity deploy

@@ -1,3 +1,4 @@
+import { orderRankField, orderRankOrdering } from '@sanity/orderable-document-list';
 import { defineField, defineType } from 'sanity';
 
 export default defineType({
@@ -5,6 +6,7 @@ export default defineType({
   title: 'Case study',
   type: 'document',
   fields: [
+    orderRankField({ type: 'caseStudy' }),
     defineField({
       name: 'title',
       title: 'Title',
@@ -62,15 +64,18 @@ export default defineType({
     }),
     defineField({
       name: 'sortOrder',
-      title: 'Sort order',
+      title: 'Sort order (legacy)',
+      description: 'Hidden — use Case studies (drag & drop) list to reorder.',
       type: 'number',
       initialValue: 0,
+      hidden: true,
       validation: (Rule) => Rule.integer().min(0),
     }),
   ],
   orderings: [
+    orderRankOrdering,
     {
-      title: 'Sort order',
+      title: 'Sort order (legacy)',
       name: 'sortOrderAsc',
       by: [{ field: 'sortOrder', direction: 'asc' }, { field: 'title', direction: 'asc' }],
     },

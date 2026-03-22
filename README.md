@@ -22,6 +22,18 @@ The site loads Work and Skills from Sanity when `VITE_SANITY_PROJECT_ID` is set.
 
 Sanity Studio in `sanity/` is optional on Vercel; host it with [`sanity deploy`](./sanity/README.md) or run locally.
 
+### Export copy for collaboration (no copy-paste from Studio)
+
+With [`.env`](./.env.example) set (repo root), run:
+
+```bash
+npm run export:sanity
+```
+
+This writes **`exports/sanity-portfolio-production.json`** with published **work projects**, **case studies**, **skills page**, and **resume PDF** metadata (same perspective as the live site). Open the file or attach it for review / LLM chats. The `exports/` folder is gitignored by default.
+
+**CLI alternative (full dataset backup):** from `sanity/`, run `npx sanity dataset export production backup.tar.gz` (requires `sanity login`).
+
 ## Contact form (SMTP via Vercel function)
 
 The CONTACT tab posts to **`/api/contact`**, a serverless handler using [nodemailer](https://nodemailer.com/). It replaces the old PHP handler (`public_html/api/contact.php`).

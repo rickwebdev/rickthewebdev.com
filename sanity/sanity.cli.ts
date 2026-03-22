@@ -14,5 +14,6 @@ export default defineCliConfig({
     projectId,
     dataset,
   },
-  studioHost: process.env.SANITY_STUDIO_STUDIO_HOST,
+  // Hosted Studio URL: https://<studioHost>.sanity.studio — set SANITY_STUDIO_STUDIO_HOST to override
+  studioHost: process.env.SANITY_STUDIO_STUDIO_HOST?.trim() || 'rickthewebdev',
 });

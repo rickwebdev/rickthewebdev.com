@@ -53,34 +53,31 @@ export const SiteStackModal: React.FC<SiteStackModalProps> = ({ open, onClose })
           About This Site
         </h2>
         <p className="site-stack-lede">
-          Built with <strong>React</strong> and <strong>TypeScript</strong>, bundled by <strong>Vite</strong>,
-          and deployed on <strong>Vercel</strong> for fast global delivery. Content — work, case studies,
-          and skills — is managed through <strong>Sanity</strong>, so everything stays fresh without
-          touching the codebase. Publish an update in Sanity and it&apos;s live instantly, no redeploy
-          needed.
+          Built as a <strong>React</strong> + <strong>TypeScript</strong> SPA, bundled with{' '}
+          <strong>Vite</strong>, deployed on <strong>Vercel</strong>. Content is managed through{' '}
+          <strong>Sanity</strong> — work and skills update instantly without a redeploy. The
+          architecture separates content from code the way it should be.
         </p>
-        <p className="site-stack-subhead">A few things worth noting under the hood:</p>
-        <ul className="site-stack-list">
-          <li>
-            Content is served via Sanity&apos;s API and CDN, so returning visitors get updates without a
-            page reload
-          </li>
-          <li>
-            If Sanity isn&apos;t configured, the app falls back to hardcoded copy in the repo so nothing
-            breaks
-          </li>
-          <li>
-            The whole thing ships as a static app, which keeps it fast, secure, and cheap to run
-          </li>
-        </ul>
-        <p className="site-stack-links-label">Stack</p>
-        <div className="site-stack-links">
-          {links.map(({ label, href }) => (
-            <a key={href} href={href} target="_blank" rel="noopener noreferrer">
-              {label}
-            </a>
+        <p className="site-stack-lede">
+          A few decisions worth noting: static deployment keeps it fast, secure, and essentially free to
+          run. <strong>Sanity</strong>&apos;s CDN means returning visitors get fresh content without a page
+          reload. If <strong>Sanity</strong> isn&apos;t configured the app falls back to hardcoded copy, so
+          nothing ever breaks in production.
+        </p>
+        <p className="site-stack-lede">
+          There&apos;s also a hidden easter egg. The Konami code does something.
+        </p>
+        <p className="site-stack-lede site-stack-stack-line">
+          <span className="site-stack-stack-prefix">Stack:</span>{' '}
+          {links.map(({ label, href }, i) => (
+            <React.Fragment key={href}>
+              {i > 0 ? ' · ' : null}
+              <a href={href} target="_blank" rel="noopener noreferrer">
+                <strong>{label}</strong>
+              </a>
+            </React.Fragment>
           ))}
-        </div>
+        </p>
       </div>
     </div>
   );

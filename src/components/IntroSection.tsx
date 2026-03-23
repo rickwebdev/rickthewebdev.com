@@ -18,7 +18,11 @@ const IntroSection: React.FC<IntroSectionProps> = ({ onAboutSite }) => (
         <div className="small-text"><i className="fas fa-video"></i>MULTI-MEDIA PRODUCTION</div>
       </div>
       <div className="summary">
-      I’m Rick Owadally, a creative technologist, digital producer, and consultant. I work directly with business owners to design and build digital-first experiences that bring their brand to life. From creative direction and branding to web development and automation, I combine strategy and execution to deliver solutions that are functional, scalable, and memorable.
+        I’m Rick Owadally, a Creative Technologist and Marketing Systems Architect. I work at the
+        intersection of front-end engineering, UX, and data orchestration, designing and building systems
+        where the experience layer and the automation layer talk to each other. From headless CMS
+        architecture and personalization platforms to AI integration and marketing automation, I bring both
+        the technical depth and the design sensibility to make it work end to end.
       </div>
       {onAboutSite && (
         <div className="intro-about-wrap">

@@ -186,13 +186,15 @@ const stateMessages: StateMessages = {
       "message": "Top o' the mornin'! Do leprechauns really guard all the pots of gold here?"
     },
     "France": {
-      "message": "Bonjour! Is it true that everyone wears a beret and carries a baguette?"
+      "message":
+        "Bonjour! So is carrying a baguette home from the bakery just how everyone does their cardio here?"
     },
     "Italy": {
       "message": "Ciao bella! Does everyone here gesticulate wildly when they talk, or is that just in the movies?"
     },
     "Japan": {
-      "message": "Konnichiwa! Are there really vending machines for everything, including used underwear?"
+      "message":
+        "Konnichiwa! So are the vending machines here really selling things I haven't even thought of yet?"
     },
     "Germany": {
       "message": "Guten Tag! Is it true that you can't jaywalk without getting stern looks from everyone?"
@@ -268,8 +270,183 @@ const stateMessages: StateMessages = {
     },
     "Morocco": {
       "message": "If I rub a lamp, will a genie really pop out, or is that just in cartoons?"
+    },
+    "Colombia": {
+      "message": "Is it true the coffee here is so good that people just skip sleep entirely?"
+    },
+    "Venezuela": {
+      "message":
+        "So if I need directions, do I just follow the Angel Falls or is there a shorter route?"
+    },
+    "Peru": {
+      "message": "If I climb Machu Picchu, does a llama automatically appear to take my photo?"
+    },
+    "Ecuador": {
+      "message":
+        "You're literally on the equator — so does standing here mean I'm in two hemispheres at once?"
+    },
+    "Bolivia": {
+      "message": "Salt flats so big they're visible from space — can I season my food from here?"
+    },
+    "Uruguay": {
+      "message":
+        "The Switzerland of South America — so does everyone here have a secret bank account and a cow?"
+    },
+    "Paraguay": {
+      "message": "Landlocked but surrounded by rivers — so do you just build boats and pretend?"
+    },
+    "Guatemala": {
+      "message": "So do the Mayan ruins just come with the neighborhood, or are those extra?"
+    },
+    "Cuba": {
+      "message": "If I order a mojito, does Ernest Hemingway automatically show up?"
+    },
+    "Dominican Republic": {
+      "message": "So is merengue just the background music to everyday life here?"
+    },
+    "Puerto Rico": {
+      "message": "La Isla del Encanto — so is everything actually enchanted, or just the beaches?"
+    },
+    "Panama": {
+      "message": "So the canal just splits the whole country in two — does that ever get weird?"
+    },
+    "El Salvador": {
+      "message": "The smallest country in Central America — does everyone just know each other?"
+    },
+    "Honduras": {
+      "message":
+        "So can I get from the Caribbean coast to the Pacific in a day, or is that just a rumor?"
+    },
+    "Nicaragua": {
+      "message": "Land of lakes and volcanoes — so is every commute basically an adventure?"
+    },
+    "Portugal": {
+      "message": "So is fado just playing everywhere all the time, or only when it rains?"
+    },
+    "Poland": {
+      "message": "Is it true pierogi is acceptable for every meal including breakfast?"
+    },
+    "Ukraine": {
+      "message": "Sunflower fields as far as the eye can see — is that just the screensaver or real life?"
+    },
+    "Israel": {
+      "message":
+        "So can I float in the Dead Sea without even trying, or do I still have to show up?"
+    },
+    "Nigeria": {
+      "message":
+        "Nollywood produces more movies than Hollywood — so is everyone here basically a film star?"
+    },
+    "Kenya": {
+      "message": "If I go for a run here, am I technically competing with world record holders?"
+    },
+    "Ghana": {
+      "message": "So is jollof rice here actually better than everywhere else, or is that just what everyone says?"
+    },
+    "Pakistan": {
+      "message":
+        "K2 is right there — so do people just casually climb the world's second highest peak on weekends?"
+    },
+    "Indonesia": {
+      "message": "17,000 islands — so how do you even pick where to go for lunch?"
+    },
+    "Vietnam": {
+      "message": "Is pho really acceptable for breakfast, or is that just something tourists do?"
+    },
+    "Romania": {
+      "message": "So does everyone here live in a castle, or just Dracula?"
+    },
+    "Czech Republic": {
+      "message":
+        "Is it true Prague has more beer per capita than anywhere else — is that a challenge or a warning?"
+    },
+    "Hungary": {
+      "message": "So is goulash basically the national answer to everything?"
+    },
+    "Denmark": {
+      "message": "Happiest country in the world — so what's everyone's secret, and can I have it?"
+    },
+    "Belgium": {
+      "message": "So do you actually argue about whether waffles or fries are the national dish?"
+    },
+    "Austria": {
+      "message": "So does everyone here actually yodel, or is that just in The Sound of Music?"
+    },
+    "United States": {
+      "message":
+        "So which state are you hiding in? The IP said USA but wouldn't give me more than that."
     }
   }
+};
+
+/** ipinfo returns ISO 3166-1 alpha-2; values match keys in `stateMessages.countries`. */
+const isoToCountry: Record<string, string> = {
+  AE: 'United Arab Emirates',
+  AR: 'Argentina',
+  AT: 'Austria',
+  AU: 'Australia',
+  BE: 'Belgium',
+  BO: 'Bolivia',
+  BR: 'Brazil',
+  CA: 'Canada',
+  CH: 'Switzerland',
+  CL: 'Chile',
+  CN: 'China',
+  CO: 'Colombia',
+  CR: 'Costa Rica',
+  CU: 'Cuba',
+  CZ: 'Czech Republic',
+  DE: 'Germany',
+  DK: 'Denmark',
+  DO: 'Dominican Republic',
+  EC: 'Ecuador',
+  EG: 'Egypt',
+  ES: 'Spain',
+  FI: 'Finland',
+  FR: 'France',
+  GB: 'United Kingdom',
+  GH: 'Ghana',
+  GR: 'Greece',
+  GT: 'Guatemala',
+  HN: 'Honduras',
+  HU: 'Hungary',
+  ID: 'Indonesia',
+  IE: 'Ireland',
+  IL: 'Israel',
+  IN: 'India',
+  IT: 'Italy',
+  JP: 'Japan',
+  KE: 'Kenya',
+  KR: 'South Korea',
+  MA: 'Morocco',
+  MX: 'Mexico',
+  NG: 'Nigeria',
+  NI: 'Nicaragua',
+  NL: 'Netherlands',
+  NO: 'Norway',
+  NZ: 'New Zealand',
+  PA: 'Panama',
+  PE: 'Peru',
+  PH: 'Philippines',
+  PK: 'Pakistan',
+  PL: 'Poland',
+  PR: 'Puerto Rico',
+  PT: 'Portugal',
+  PY: 'Paraguay',
+  RO: 'Romania',
+  RU: 'Russia',
+  SA: 'Saudi Arabia',
+  SE: 'Sweden',
+  SG: 'Singapore',
+  SV: 'El Salvador',
+  TH: 'Thailand',
+  TR: 'Turkey',
+  UA: 'Ukraine',
+  US: 'United States',
+  UY: 'Uruguay',
+  VE: 'Venezuela',
+  VN: 'Vietnam',
+  ZA: 'South Africa',
 };
 
 const LocationInsights: React.FC = () => {
@@ -373,40 +550,42 @@ const LocationInsights: React.FC = () => {
 
         const city = data.city || 'Unknown City';
         const state = data.region || '';
-        const country = data.country || 'Unknown Country';
-        
-        let locationString = [city, state, country].filter(Boolean).join(', ');
+        const countryRaw = data.country;
+        const countryCode = countryRaw.trim().toUpperCase();
+        const countryNameResolved = isoToCountry[countryCode] ?? countryRaw;
+
+        const locationString = [city, state, countryNameResolved].filter(Boolean).join(', ');
         let message = `Hello visitor from ${locationString}! `;
-        
-        const normalizedCountry = country.toLowerCase().trim();
-        const isUS = normalizedCountry === 'us' || normalizedCountry === 'united states' || normalizedCountry === 'usa';
-        
+
+        const isUS = countryCode === 'US';
+
         if (isUS) {
           const normalizedState = state.toLowerCase().trim();
           const normalizedCity = city.toLowerCase().trim();
-          
-          const stateKey = Object.keys(stateMessages.states).find(key => 
-            key.toLowerCase() === normalizedState
+
+          const stateKey = Object.keys(stateMessages.states).find(
+            (key) => key.toLowerCase() === normalizedState,
           );
-          
+
           if (stateKey) {
             if (normalizedCity.includes('new york') && normalizedState === 'new york') {
-              message += stateMessages.states["New York"].message;
+              message += stateMessages.states['New York'].message;
             } else if (normalizedCity.includes('los angeles') && normalizedState === 'california') {
-              message += stateMessages.states["California"].message;
+              message += stateMessages.states['California'].message;
             } else if (normalizedCity.includes('chicago') && normalizedState === 'illinois') {
-              message += stateMessages.states["Illinois"].message;
+              message += stateMessages.states['Illinois'].message;
             } else {
               message += stateMessages.states[stateKey].message;
             }
           } else {
-            message += `Welcome to ${state}! We don't have a special message for you yet, but we're sure it's a great place!`;
+            message += stateMessages.countries['United States'].message;
           }
         } else {
-          const countryKey = Object.keys(stateMessages.countries).find(key => 
-            key.toLowerCase() === normalizedCountry
+          const normalizedName = countryNameResolved.toLowerCase().trim();
+          const countryKey = Object.keys(stateMessages.countries).find(
+            (key) => key.toLowerCase() === normalizedName,
           );
-          
+
           if (countryKey) {
             message += stateMessages.countries[countryKey].message;
           } else {
@@ -420,7 +599,7 @@ const LocationInsights: React.FC = () => {
         message += ` 🎮 If you made it this far, there's a hidden secret! Try pressing: Up Up Down Down Left Right Left Right B A • `;
         
         setLocationMessage(message);
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error('Error fetching location:', error);
         const fallbackMessage = 'The location API has reached its free daily limit. Sign up for an API token to get 50k requests/month. Welcome to my portfolio! Thanks for visiting! 🎮 If you made it this far, there\'s a hidden secret! Try pressing: Up Up Down Down Left Right Left Right B A • ';
         setLocationMessage(fallbackMessage);

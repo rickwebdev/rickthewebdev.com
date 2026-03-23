@@ -1862,43 +1862,23 @@ body, html {
   color: rgba(255, 255, 255, 0.92);
 }
 
-.site-stack-subhead {
-  margin: 0 0 0.5rem;
-  font-size: 0.92rem;
+.site-stack-stack-line {
+  margin-bottom: 0;
+}
+
+.site-stack-stack-prefix {
   font-weight: 500;
   color: rgba(255, 255, 255, 0.88);
 }
 
-.site-stack-list {
-  margin: 0 0 1.25rem;
-  padding-left: 1.2rem;
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.82);
-}
-
-.site-stack-links-label {
-  margin: 0 0 0.5rem;
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: rgba(255, 255, 255, 0.45);
-}
-
-.site-stack-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem 1rem;
-}
-
-.site-stack-links a {
+.site-stack-stack-line a {
   color: #ffe259;
   font-size: 0.9rem;
   text-decoration: underline;
   text-underline-offset: 0.15em;
 }
 
-.site-stack-links a:hover {
+.site-stack-stack-line a:hover {
   color: #fff6b0;
 }
 

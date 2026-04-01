@@ -1062,18 +1062,6 @@ body {
   transform: translateY(-5px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
-.website-card::after {
-  content: '↗';
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  color: rgba(255, 255, 255, 0.6);
-  font-size: 1.2rem;
-  transition: color 0.3s ease;
-}
-.website-card:hover::after {
-  color: rgba(255, 255, 255, 0.9);
-}
 
 /* Scroll-triggered reveal (cards index ≥ 6): initial state */
 .website-card--reveal-pending:not(.website-card--reveal-visible) {

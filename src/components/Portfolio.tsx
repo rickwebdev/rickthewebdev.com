@@ -130,13 +130,9 @@ const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
                 href={website.url}
                 {...(ext ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                 className={
-                  revealLater
-                    ? 'website-card website-card--reveal-pending'
-                    : 'website-card'
+                  revealLater ? 'website-card website-card--reveal-pending' : 'website-card'
                 }
-                {...(revealLater
-                  ? { 'data-reveal-slot': String(index - REVEAL_THRESHOLD) }
-                  : {})}
+                {...(revealLater ? { 'data-reveal-slot': String(index - REVEAL_THRESHOLD) } : {})}
               >
                 <img
                   src={website.image}

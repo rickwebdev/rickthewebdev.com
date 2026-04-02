@@ -20,9 +20,15 @@ interface IntroSectionProps {
   onAboutSite?: () => void;
   /** When true (after load), runs portal morph + WebGL reveal */
   entranceActive?: boolean;
+  /** After user opened Work at least once — skip voltron/skill-line replay when coming home */
+  introSawWorkOnce?: boolean;
 }
 
-const IntroSection: React.FC<IntroSectionProps> = ({ onAboutSite, entranceActive }) => {
+const IntroSection: React.FC<IntroSectionProps> = ({
+  onAboutSite,
+  entranceActive,
+  introSawWorkOnce = false,
+}) => {
   const [typedLen, setTypedLen] = useState(0);
   const [typingDone, setTypingDone] = useState(false);
   const [footerVisible, setFooterVisible] = useState(false);
@@ -100,8 +106,15 @@ const IntroSection: React.FC<IntroSectionProps> = ({ onAboutSite, entranceActive
 
   const showCursor = entranceActive && !reducedMotion && !typingDone;
 
+  const portalClass =
+    entranceActive && introSawWorkOnce
+      ? ' intro-portal--settled'
+      : entranceActive
+        ? ' intro-portal--enter'
+        : '';
+
   return (
-    <div className={`intro-section box${entranceActive ? ' intro-portal--enter' : ''}`}>
+    <div className={`intro-section box${portalClass}`}>
       <PortalWebGL className="portal-webgl-layer" entranceActive={!!entranceActive} />
       <div className="intro-content">
         <div className="large-text">RICK</div>

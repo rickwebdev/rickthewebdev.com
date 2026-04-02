@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect } from 'react';
+import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import Header from './components/Header';
 import Avatar from './components/Avatar';
 import LocationInsights from './components/LocationInsights';
@@ -22,6 +22,8 @@ function App() {
   const [isFadedIn, setIsFadedIn] = useState(false);
   /** After shell fade so portal morph + WebGL aren’t masked by the same opacity ramp */
   const [portalEntranceReady, setPortalEntranceReady] = useState(false);
+  /** After opening Work once, home uses intro-portal--settled (no name/skills replay when shell un-hides) */
+  const [introSawWorkOnce, setIntroSawWorkOnce] = useState(false);
   const [tetrisOpen, setTetrisOpen] = useState(false);
 
   const openBox = () => setBoxOpen(true);
@@ -65,6 +67,14 @@ function App() {
     return () => window.clearTimeout(id);
   }, [isFadedIn]);
 
+  const prevBoxOpenRef = useRef(false);
+  useEffect(() => {
+    if (prevBoxOpenRef.current && !boxOpen) {
+      setIntroSawWorkOnce(true);
+    }
+    prevBoxOpenRef.current = boxOpen;
+  }, [boxOpen]);
+
   useEffect(() => {
     if (import.meta.env.DEV && !sanityConfigured) {
       console.info(
@@ -86,14 +96,23 @@ function App() {
       <LocationInsights />
       
       <div className={`flex-container ${isFadedIn ? 'fade-in' : ''}`}>
-        {boxOpen ? (
-          <Header onClose={closeBox} />
-        ) : (
+        {/*
+          Keep Intro mounted when Work is open (hidden) so closing X doesn’t remount intro:
+          portal + typewriter only run once; state stays intact.
+          display:contents when visible keeps .box a direct flex child like before.
+        */}
+        <div
+          className="intro-shell"
+          style={{ display: boxOpen ? 'none' : 'contents' }}
+          aria-hidden={boxOpen}
+        >
           <IntroSection
             onAboutSite={() => setSiteStackOpen(true)}
             entranceActive={portalEntranceReady}
+            introSawWorkOnce={introSawWorkOnce}
           />
-        )}
+        </div>
+        {boxOpen ? <Header onClose={closeBox} /> : null}
         <Avatar
           onLightbulbClick={openBox}
           highlightLightbulb={boxOpen}

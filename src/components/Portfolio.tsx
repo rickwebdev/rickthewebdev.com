@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { fetchPortfolioFromSanity } from '../lib/fetchSiteContent';
 import type { WebsiteCard } from '../lib/fetchSiteContent';
 import { FALLBACK_WEBSITES } from '../data/portfolioFallback';
@@ -44,8 +44,10 @@ const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
   }, []);
 
   const [imagesLoaded, setImagesLoaded] = useState(0);
+  const imageLoadSeenRef = useRef<Set<string>>(new Set());
 
   useEffect(() => {
+    imageLoadSeenRef.current = new Set();
     setImagesLoaded(0);
   }, [websites]);
 
@@ -53,9 +55,11 @@ const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
   const allLoaded =
     !cmsReady ? false : websites.length === 0 ? true : imagesLoaded >= imagesToWait;
 
-  const handleImageLoad = () => {
+  const handleImageLoad = useCallback((key: string) => {
+    if (imageLoadSeenRef.current.has(key)) return;
+    imageLoadSeenRef.current.add(key);
     setImagesLoaded((prev) => prev + 1);
-  };
+  }, []);
 
   useEffect(() => {
     if (!allLoaded || websites.length <= REVEAL_THRESHOLD) return;
@@ -140,8 +144,14 @@ const Portfolio: React.FC<{ hideTitle?: boolean }> = ({ hideTitle }) => {
                   className="website-image"
                   width={400}
                   height={200}
-                  onLoad={handleImageLoad}
-                  onError={handleImageLoad}
+                  ref={(el) => {
+                    if (!el) return;
+                    if (el.complete && el.naturalWidth > 0) {
+                      handleImageLoad(website.key);
+                    }
+                  }}
+                  onLoad={() => handleImageLoad(website.key)}
+                  onError={() => handleImageLoad(website.key)}
                 />
                 <div className="website-info">
                   <h3>{website.title}</h3>

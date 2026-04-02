@@ -72,8 +72,10 @@ body {
 }
 
 /* Do not use * — intro headline/body use staggered keyframes */
+/* .box may be inside .intro-shell (kept mounted when Work is open) — not always a direct child */
 .flex-container.fade-in,
 .flex-container.fade-in > .box,
+.flex-container.fade-in > .intro-shell .box,
 .flex-container.fade-in > .avatar-container,
 .location-insights {
   opacity: 1 !important;
@@ -593,7 +595,8 @@ body {
     overflow-y: visible;
   }
 
-  .flex-container > .box {
+  .flex-container > .box,
+  .flex-container > .intro-shell .box {
     flex: 0 1 auto;
     min-height: 0;
     overflow-x: hidden;
@@ -1407,7 +1410,9 @@ body {
 
 /* Hide intro copy until shell fade ends; then portal morph runs (see App.tsx delay) */
 @media (prefers-reduced-motion: no-preference) {
-  .flex-container.fade-in .intro-section.box:not(.intro-portal--enter) .intro-content {
+  .flex-container.fade-in
+    .intro-section.box:not(.intro-portal--enter):not(.intro-portal--settled)
+    .intro-content {
     opacity: 0;
   }
 }
@@ -1516,6 +1521,45 @@ body {
   animation: skillLineFlyIn 0.48s cubic-bezier(0.22, 1, 0.36, 1) 1.44s both;
 }
 
+/* Returning from Work: final layout only — no voltron / skill-line motion (display:none was restarting CSS anims) */
+.intro-section.intro-portal--settled .intro-content > .large-text:first-child {
+  opacity: 1;
+  letter-spacing: 0.03em;
+  transform: translate3d(0, 0, 0) scale(1);
+  transform-origin: 15% 60%;
+  animation: none;
+}
+
+.intro-section.intro-portal--settled .intro-content > .name-parts > .name-part.color-wash:not(.dally) {
+  opacity: 1;
+  letter-spacing: 0.04em;
+  transform: translate3d(0, 0, 0);
+  animation: colorWash 4s linear infinite;
+}
+
+.intro-section.intro-portal--settled .intro-content > .name-parts > .name-part.color-wash.dally {
+  opacity: 1;
+  letter-spacing: 0.04em;
+  transform: translate3d(0, 0, 0);
+  animation: colorWash 4s linear infinite;
+}
+
+.intro-section.intro-portal--settled .intro-content > .small-text-container > .small-text:nth-child(1) {
+  opacity: 1;
+  letter-spacing: 0.1em;
+  transform: translate3d(0, 0, 0);
+  animation: none;
+}
+
+.intro-section.intro-portal--settled .intro-content > .small-text-container > .small-text:nth-child(2),
+.intro-section.intro-portal--settled .intro-content > .small-text-container > .small-text:nth-child(3),
+.intro-section.intro-portal--settled .intro-content > .small-text-container > .small-text:nth-child(4),
+.intro-section.intro-portal--settled .intro-content > .small-text-container > .small-text:nth-child(5) {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  animation: none;
+}
+
 @keyframes summaryCursorBlink {
   0%,
   100% {
@@ -1537,11 +1581,14 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .intro-section.intro-portal--enter .intro-content > .large-text:first-child,
-  .intro-section.intro-portal--enter .intro-content > .small-text-container > .small-text {
+  .intro-section.intro-portal--enter .intro-content > .small-text-container > .small-text,
+  .intro-section.intro-portal--settled .intro-content > .large-text:first-child,
+  .intro-section.intro-portal--settled .intro-content > .small-text-container > .small-text {
     animation: none;
   }
 
-  .intro-section.intro-portal--enter .intro-content > .name-parts > .name-part.color-wash {
+  .intro-section.intro-portal--enter .intro-content > .name-parts > .name-part.color-wash,
+  .intro-section.intro-portal--settled .intro-content > .name-parts > .name-part.color-wash {
     animation: colorWash 4s linear infinite;
   }
 

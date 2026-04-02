@@ -52,20 +52,21 @@ export const SiteStackModal: React.FC<SiteStackModalProps> = ({ open, onClose })
         <h2 id={titleId} className="site-stack-title">
           About This Site
         </h2>
+        <h3 className="site-stack-subtitle">How to navigate</h3>
         <p className="site-stack-lede">
-          Built as a <strong>React</strong> + <strong>TypeScript</strong> SPA, bundled with{' '}
-          <strong>Vite</strong>, deployed on <strong>Vercel</strong>. Content is managed through{' '}
-          <strong>Sanity</strong> — work and skills update instantly without a redeploy. The
-          architecture separates content from code the way it should be.
+          The home screen is intentionally minimal — name, intro, skills at a glance. The actual
+          portfolio is one click away: tap the lightbulb on the photo to open the Work · Skills ·
+          Contact panel.
+        </p>
+        <h3 className="site-stack-subtitle">How it&apos;s built</h3>
+        <p className="site-stack-lede">
+          <strong>React</strong> + <strong>TypeScript</strong> SPA, bundled with <strong>Vite</strong>,
+          deployed on <strong>Vercel</strong>. Content lives in <strong>Sanity</strong> — work and skills
+          update without a redeploy, and the app falls back gracefully to hardcoded copy if Sanity
+          isn&apos;t configured. Static deployment keeps it fast, secure, and cheap to run.
         </p>
         <p className="site-stack-lede">
-          A few decisions worth noting: static deployment keeps it fast, secure, and essentially free to
-          run. <strong>Sanity</strong>&apos;s CDN means returning visitors get fresh content without a page
-          reload. If <strong>Sanity</strong> isn&apos;t configured the app falls back to hardcoded copy, so
-          nothing ever breaks in production.
-        </p>
-        <p className="site-stack-lede">
-          There&apos;s also a hidden easter egg. The Konami code does something.
+          There&apos;s a Konami code easter egg if you&apos;re into that kind of thing.
         </p>
         <p className="site-stack-lede site-stack-stack-line">
           <span className="site-stack-stack-prefix">Stack:</span>{' '}

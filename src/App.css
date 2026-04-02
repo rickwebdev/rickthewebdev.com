@@ -60,14 +60,10 @@ body {
   animation: spin 1s linear infinite;
 }
 
-/* Fade in animation for all elements */
+/* Fade in: outer shell only so intro copy can run its own morph sequence */
 .flex-container,
 .box,
-.avatar-container,
-.large-text,
-.small-text-container,
-.summary,
-.icon-links {
+.avatar-container {
   opacity: 0;
   transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: opacity;
@@ -75,9 +71,10 @@ body {
   transform: translateZ(0);
 }
 
-/* When flex-container has fade-in, fade in all children */
+/* Do not use * — intro headline/body use staggered keyframes */
 .flex-container.fade-in,
-.flex-container.fade-in *,
+.flex-container.fade-in > .box,
+.flex-container.fade-in > .avatar-container,
 .location-insights {
   opacity: 1 !important;
 }
@@ -202,6 +199,7 @@ body {
 
 /* Summary text */
 .summary {
+  position: relative;
   font-size: 1.4rem;
   color: white;
   text-align: left;
@@ -212,6 +210,23 @@ body {
   z-index: 2;
 }
 
+/* Invisible full paragraph reserves space so typewriter doesn’t reflow the page */
+.summary-reserve {
+  display: block;
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.summary-typewriter {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+  text-align: left;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
 /* Avatar */
 .avatar-container {
   position: relative;
@@ -219,6 +234,51 @@ body {
   height: 300px;
   flex-shrink: 0;
 }
+
+/* Partial orbit ring (original look: only bottom + right border arcs) */
+.avatar-container::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 113.33%;
+  height: 113.33%;
+  max-width: none;
+  box-sizing: border-box;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid black;
+  border-top: none;
+  border-left: none;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1) 0.58s;
+}
+
+.avatar-container--enter::before {
+  opacity: 1;
+}
+
+/* Photo: spin in from the right; final state after animation */
+.avatar-container:not(.avatar-container--enter) .linkedin-avatar {
+  transform: translateX(72px) rotate(-96deg);
+}
+
+.avatar-container--enter .linkedin-avatar {
+  animation: avatarPhotoSpinIn 0.65s cubic-bezier(0.28, 1.35, 0.45, 1) forwards;
+  transition: transform 0.3s ease;
+}
+
+@keyframes avatarPhotoSpinIn {
+  from {
+    transform: translateX(72px) rotate(-96deg);
+  }
+  to {
+    transform: translateX(0) rotate(0deg);
+  }
+}
+
 .linkedin-avatar {
   width: 100%;
   height: 100%;
@@ -230,23 +290,29 @@ body {
   position: relative;
   z-index: 10;
 }
+
 .avatar-container:hover .linkedin-avatar {
   transform: rotate(3deg) scale(1.02);
   transition: transform 0.3s;
 }
-.avatar-container::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 340px;
-  height: 340px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  border: 2px solid black;
-  border-top: none;
-  border-left: none;
-  z-index: 1;
+
+.avatar-container.avatar-container--enter:hover .linkedin-avatar {
+  transform: rotate(3deg) scale(1.02);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar-container:not(.avatar-container--enter) .linkedin-avatar {
+    transform: none;
+  }
+
+  .avatar-container--enter .linkedin-avatar {
+    animation: none !important;
+  }
+
+  .avatar-container--enter::before {
+    opacity: 1;
+    transition: opacity 0.2s ease;
+  }
 }
 
 /* Icon links */
@@ -280,6 +346,45 @@ body {
   right: -40px;
   pointer-events: all;
   font-size: 3rem;
+}
+
+/* Orbit icons: hidden until entrance, then stack in right → left (PDF → LinkedIn → bulb) */
+.icon-links:not(.avatar-icon-links--enter) .avatar-orbit-icon {
+  opacity: 0;
+  transform: translateX(52px);
+}
+
+@keyframes avatarOrbitStackIn {
+  from {
+    opacity: 0;
+    transform: translateX(52px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Orbit icons stack R → L once .avatar-icon-links--enter is set (after portal copy is done) */
+.icon-links.avatar-icon-links--enter .avatar-orbit-icon--pdf {
+  animation: avatarOrbitStackIn 0.52s cubic-bezier(0.28, 1.35, 0.45, 1) 0.04s both;
+}
+
+.icon-links.avatar-icon-links--enter .avatar-orbit-icon--linkedin {
+  animation: avatarOrbitStackIn 0.52s cubic-bezier(0.28, 1.35, 0.45, 1) 0.13s both;
+}
+
+.icon-links.avatar-icon-links--enter .avatar-orbit-icon--bulb {
+  animation: avatarOrbitStackIn 0.52s cubic-bezier(0.28, 1.35, 0.45, 1) 0.24s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon-links:not(.avatar-icon-links--enter) .avatar-orbit-icon,
+  .icon-links.avatar-icon-links--enter .avatar-orbit-icon {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+  }
 }
 
 /* Gradient background — fixed like .rock-background so it never “runs out” when the layout is tall */
@@ -351,19 +456,18 @@ body {
   Mobile (≤768px)
 ————————————————————————*/
 @media (max-width: 768px) {
+  /* Lock viewport: scroll happens inside .box only so intro ↔ portfolio doesn’t shift the shell */
   html,
   body {
-    height: auto;
-    min-height: 100vh;
-    min-height: 100dvh;
+    height: 100%;
+    min-height: 100%;
+    overflow: hidden;
     overflow-x: hidden;
-    overflow-y: auto;
   }
   #root {
-    height: auto;
-    min-height: 100vh;
-    min-height: 100dvh;
-    overflow: visible;
+    height: 100%;
+    min-height: 100%;
+    overflow: hidden;
   }
   .gradient-background {
     position: fixed;
@@ -379,18 +483,33 @@ body {
   }
 
   .flex-container {
+    position: fixed;
+    inset: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    height: 100%;
+    max-height: 100dvh;
     flex-direction: column-reverse;
     justify-content: flex-start;
     align-items: center;
     gap: 0;
     padding: 0;
-    width: 100vw;
-    min-height: 100vh;
-    min-height: 100dvh;
-    height: auto;
-    margin-bottom: 0;
-    position: relative;
+    padding-bottom: env(safe-area-inset-bottom, 0);
+    margin: 0;
+    overflow: hidden;
+    box-sizing: border-box;
+    z-index: 2;
   }
+
+  .flex-container > .avatar-container {
+    flex-shrink: 0;
+  }
+
   .avatar-container {
     width: 200px;
     height: 200px;
@@ -408,21 +527,13 @@ body {
     border: 2px solid black;
     z-index: 2;
   }
+
   .avatar-container::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
     width: 200px;
     height: 206px;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    border: 2.5px solid black;
-    border-top: none;
-    border-left: none;
-    z-index: 1;
-    pointer-events: none;
+    border-width: 2.5px;
   }
+
   .icon-links {
     width: 100%;
     height: 100%;
@@ -452,19 +563,27 @@ body {
     min-width: 0;
     width: 96vw;
     height: auto;
-    min-height: 500px;
+    min-height: 0;
     max-height: none;
     padding: 0;
     border-radius: 12px;
     background: rgba(0,0,0,0.4);
-    margin-bottom: 2rem;
+    margin-bottom: 0;
     /* Add transform to create a new stacking context and prevent flashing */
     transform: translateZ(0);
     will-change: auto;
     display: flex;
     flex-direction: column;
-    transition: height 0.3s ease, max-height 0.3s ease;
+    transition: none;
     position: relative;
+  }
+
+  .flex-container > .box {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
   .large-text {
     font-size: 12vw;
@@ -858,22 +977,17 @@ body {
     width: 180px;
     height: 180px;
   }
+
   .avatar-container::before {
-    content: '';
-    position: absolute;
-    left: 50%;
-    top: 50%;
     width: 210px;
     height: 210px;
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-    border: 1.5px solid black;
-    border-top: none;
-    border-left: none;
-    opacity: 0.5;
-    z-index: 1;
-    pointer-events: none;
+    border-width: 1.5px;
   }
+
+  .avatar-container--enter::before {
+    opacity: 0.5;
+  }
+
   .icon-links {
     position: absolute;
     width: 100%;
@@ -1253,8 +1367,20 @@ body {
   display: none; /* Chrome, Safari, Opera */
 }
 
+/* WebGL lives behind copy; zero layout impact (absolute, inset 0) */
+.portal-webgl-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  overflow: hidden;
+}
+
 /* Intro content container */
 .intro-content {
+  position: relative;
+  z-index: 1;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -1263,6 +1389,152 @@ body {
   padding: 2rem;
   max-width: 100%;
   box-sizing: border-box;
+}
+
+/* Hide intro copy until shell fade ends; then portal morph runs (see App.tsx delay) */
+@media (prefers-reduced-motion: no-preference) {
+  .flex-container.fade-in .intro-section.box:not(.intro-portal--enter) .intro-content {
+    opacity: 0;
+  }
+}
+
+/* Portal entrance: “Voltron” — wide kerning locks in; name lines slide from L/R then snap tight */
+@keyframes voltronFormRick {
+  0% {
+    opacity: 0;
+    letter-spacing: 0.52em;
+    transform: translate3d(-1.1rem, -0.25rem, 0) scale(0.96);
+  }
+  55% {
+    opacity: 1;
+    letter-spacing: 0.14em;
+  }
+  100% {
+    opacity: 1;
+    letter-spacing: 0.03em;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+@keyframes voltronFormOwa {
+  0% {
+    opacity: 0;
+    letter-spacing: 0.58em;
+    transform: translate3d(-3rem, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    letter-spacing: 0.04em;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes voltronFormDally {
+  0% {
+    opacity: 0;
+    letter-spacing: 0.58em;
+    transform: translate3d(3rem, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    letter-spacing: 0.04em;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes voltronFormCrew {
+  0% {
+    opacity: 0;
+    letter-spacing: 0.38em;
+    transform: translate3d(-1.5rem, 0, 0);
+  }
+  100% {
+    opacity: 1;
+    letter-spacing: 0.1em;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+/* Skill labels: fly in one-by-one from the left (no vertical motion — avoids crowding the name) */
+@keyframes skillLineFlyIn {
+  from {
+    opacity: 0;
+    transform: translate3d(-2rem, 0, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.intro-section.intro-portal--enter .intro-content > .large-text:first-child {
+  transform-origin: 15% 60%;
+  animation: voltronFormRick 0.88s cubic-bezier(0.28, 1.35, 0.45, 1) 0.02s both;
+}
+
+.intro-section.intro-portal--enter .intro-content > .name-parts > .name-part.color-wash:not(.dally) {
+  animation: voltronFormOwa 0.8s cubic-bezier(0.28, 1.35, 0.45, 1) 0.1s both,
+    colorWash 4s linear infinite;
+}
+
+.intro-section.intro-portal--enter .intro-content > .name-parts > .name-part.color-wash.dally {
+  animation: voltronFormDally 0.8s cubic-bezier(0.28, 1.35, 0.45, 1) 0.26s both,
+    colorWash 4s linear infinite;
+}
+
+.intro-section.intro-portal--enter .intro-content > .small-text-container > .small-text:nth-child(1) {
+  animation: voltronFormCrew 0.62s cubic-bezier(0.22, 1, 0.36, 1) 0.42s both;
+}
+
+.intro-section.intro-portal--enter .intro-content > .small-text-container > .small-text:nth-child(2) {
+  animation: skillLineFlyIn 0.48s cubic-bezier(0.22, 1, 0.36, 1) 1.08s both;
+}
+
+.intro-section.intro-portal--enter .intro-content > .small-text-container > .small-text:nth-child(3) {
+  animation: skillLineFlyIn 0.48s cubic-bezier(0.22, 1, 0.36, 1) 1.2s both;
+}
+
+.intro-section.intro-portal--enter .intro-content > .small-text-container > .small-text:nth-child(4) {
+  animation: skillLineFlyIn 0.48s cubic-bezier(0.22, 1, 0.36, 1) 1.32s both;
+}
+
+.intro-section.intro-portal--enter .intro-content > .small-text-container > .small-text:nth-child(5) {
+  animation: skillLineFlyIn 0.48s cubic-bezier(0.22, 1, 0.36, 1) 1.44s both;
+}
+
+@keyframes summaryCursorBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.intro-section .summary .summary-cursor {
+  display: inline-block;
+  margin-left: 0.06em;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.95);
+  animation: summaryCursorBlink 0.72s step-end infinite;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intro-section.intro-portal--enter .intro-content > .large-text:first-child,
+  .intro-section.intro-portal--enter .intro-content > .small-text-container > .small-text {
+    animation: none;
+  }
+
+  .intro-section.intro-portal--enter .intro-content > .name-parts > .name-part.color-wash {
+    animation: colorWash 4s linear infinite;
+  }
+
+  .intro-section .summary .summary-cursor {
+    animation: none;
+    opacity: 0;
+  }
 }
 
 /* Skills section */
@@ -1772,9 +2044,43 @@ body {
 }
 
 /* —— Site stack / colophon —— */
+.intro-lightbulb-hint {
+  margin: 0.85rem 0 0;
+  padding: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+  font-size: 0.95rem;
+  line-height: 1.45;
+  font-weight: 400;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.65);
+  opacity: 0;
+  transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.intro-lightbulb-hint--visible {
+  opacity: 1;
+}
+
+.intro-lightbulb-hint-icon {
+  margin-right: 0.45em;
+  color: rgba(255, 226, 89, 0.95);
+  font-size: 0.92em;
+}
+
 .intro-about-wrap {
   margin-top: 1.25rem;
   width: 100%;
+  opacity: 0;
+  transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+
+.intro-about-wrap.intro-about-wrap--visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .intro-about-btn {

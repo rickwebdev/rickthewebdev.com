@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useLayoutEffect } from 'react';
 import Header from './components/Header';
 import Avatar from './components/Avatar';
 import LocationInsights from './components/LocationInsights';
@@ -9,11 +9,19 @@ import { SiteStackModal } from './components/SiteStackModal';
 import './App.css';
 import { sanityConfigured } from './lib/sanity';
 
+/**
+ * Portal intro starts before the shell opacity transition finishes so the glass
+ * doesn’t sit empty as long (slight overlap with the fade is OK).
+ */
+const PORTAL_ENTRANCE_DELAY_MS = 480;
+
 function App() {
   const [siteStackOpen, setSiteStackOpen] = useState(false);
   const [boxOpen, setBoxOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isFadedIn, setIsFadedIn] = useState(false);
+  /** After shell fade so portal morph + WebGL aren’t masked by the same opacity ramp */
+  const [portalEntranceReady, setPortalEntranceReady] = useState(false);
   const [tetrisOpen, setTetrisOpen] = useState(false);
 
   const openBox = () => setBoxOpen(true);
@@ -32,7 +40,7 @@ function App() {
       // Add a small delay before fading in the content
       setTimeout(() => {
         setIsFadedIn(true);
-      }, 100);
+      }, 40);
     };
 
     // Fallback in case the image fails to load
@@ -40,9 +48,22 @@ function App() {
       setIsLoading(false);
       setTimeout(() => {
         setIsFadedIn(true);
-      }, 100);
+      }, 40);
     };
   }, []);
+
+  useLayoutEffect(() => {
+    if (!isFadedIn) {
+      setPortalEntranceReady(false);
+      return;
+    }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setPortalEntranceReady(true);
+      return;
+    }
+    const id = window.setTimeout(() => setPortalEntranceReady(true), PORTAL_ENTRANCE_DELAY_MS);
+    return () => window.clearTimeout(id);
+  }, [isFadedIn]);
 
   useEffect(() => {
     if (import.meta.env.DEV && !sanityConfigured) {
@@ -68,9 +89,17 @@ function App() {
         {boxOpen ? (
           <Header onClose={closeBox} />
         ) : (
-          <IntroSection onAboutSite={() => setSiteStackOpen(true)} />
+          <IntroSection
+            onAboutSite={() => setSiteStackOpen(true)}
+            entranceActive={portalEntranceReady}
+          />
         )}
-        <Avatar onLightbulbClick={openBox} highlightLightbulb={boxOpen} />
+        <Avatar
+          onLightbulbClick={openBox}
+          highlightLightbulb={boxOpen}
+          shellEntranceActive={portalEntranceReady}
+          iconsEntranceActive={portalEntranceReady}
+        />
       </div>
       
       {/* Konami Code Easter Egg */}

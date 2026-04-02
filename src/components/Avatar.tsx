@@ -7,9 +7,18 @@ const FALLBACK_RESUME_PDF = '/ricko_resume.pdf';
 interface AvatarProps {
   onLightbulbClick?: () => void;
   highlightLightbulb?: boolean;
+  /** Photo + ring outline (early, with portal) */
+  shellEntranceActive?: boolean;
+  /** Orbit icons — after intro copy is complete */
+  iconsEntranceActive?: boolean;
 }
 
-const Avatar: React.FC<AvatarProps> = ({ onLightbulbClick, highlightLightbulb }) => {
+const Avatar: React.FC<AvatarProps> = ({
+  onLightbulbClick,
+  highlightLightbulb,
+  shellEntranceActive = false,
+  iconsEntranceActive = false,
+}) => {
   const avatarRef = useRef<HTMLImageElement>(null);
   const [resumePdfUrl, setResumePdfUrl] = useState(FALLBACK_RESUME_PDF);
 
@@ -47,12 +56,16 @@ const Avatar: React.FC<AvatarProps> = ({ onLightbulbClick, highlightLightbulb })
   };
 
   return (
-    <div className="avatar-container" onClick={handleAvatarClick} style={{ cursor: 'pointer' }}>
-      <img 
+    <div
+      className={`avatar-container${shellEntranceActive ? ' avatar-container--enter' : ''}`}
+      onClick={handleAvatarClick}
+      style={{ cursor: 'pointer' }}
+    >
+      <img
         ref={avatarRef}
-        src="/images/avatar_linkedin.jpeg" 
-        alt="Rick Owadally" 
-        className="linkedin-avatar" 
+        src="/images/avatar_linkedin.jpeg"
+        alt="Rick Owadally"
+        className="linkedin-avatar"
         onError={(e) => {
           const target = e.target as HTMLImageElement;
           target.onerror = null;
@@ -61,10 +74,12 @@ const Avatar: React.FC<AvatarProps> = ({ onLightbulbClick, highlightLightbulb })
         }}
       />
       
-      <div className="icon-links">
+      <div
+        className={`icon-links${iconsEntranceActive ? ' avatar-icon-links--enter' : ''}`}
+      >
         {onLightbulbClick && (
           <button
-            className="ideas-icon"
+            className="ideas-icon avatar-orbit-icon avatar-orbit-icon--bulb"
             aria-label="Open Ideas"
             onClick={onLightbulbClick}
             type="button"
@@ -72,20 +87,20 @@ const Avatar: React.FC<AvatarProps> = ({ onLightbulbClick, highlightLightbulb })
             <i className={`fas fa-lightbulb${highlightLightbulb ? ' highlight-yellow' : ''}`}></i>
           </button>
         )}
-        <a 
-          href="https://www.linkedin.com/in/rickowadally/" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="linkedin-icon"
+        <a
+          href="https://www.linkedin.com/in/rickowadally/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="linkedin-icon avatar-orbit-icon avatar-orbit-icon--linkedin"
           onClick={e => handleIconClick(e, 'https://www.linkedin.com/in/rickowadally/')}
         >
           <i className="fab fa-linkedin"></i>
         </a>
-        <a 
-          href={resumePdfUrl} 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="pdf-icon"
+        <a
+          href={resumePdfUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="pdf-icon avatar-orbit-icon avatar-orbit-icon--pdf"
           onClick={(e) => handleIconClick(e, resumePdfUrl)}
         >
           <i className="fas fa-file-pdf"></i>

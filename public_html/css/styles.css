@@ -359,7 +359,7 @@ body, html {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-image: url('../images/rockbg.avif');
+    background-image: url('../images/rock_bg.avif');
     background-size: cover;
     background-position: center;
     opacity: 0.3; /* Adjust this value to control transparency */
@@ -561,7 +561,7 @@ body, html {
       left: 0;
       width: 100vw;
       height: 100vh;
-      background-image: url('../images/rockbg.avif');
+      background-image: url('../images/rock_bg.avif');
       background-size: cover;
       background-position: center;
       opacity: 0.3; /* Adjust this value to control transparency */

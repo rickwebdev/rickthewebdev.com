@@ -1,15 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { fetchResumePdfUrl } from '../lib/fetchSiteContent';
+import { AVATAR_PLACEHOLDER_IMAGE } from '../lib/imagePlaceholders';
 import { sanityConfigured } from '../lib/sanity';
 
 const FALLBACK_RESUME_PDF = '/ricko_resume.pdf';
+/** Bundled headshot — portfolio art stays on Sanity; this stays in public/images. */
+const LOCAL_AVATAR_SRC = '/images/avatar_linkedin.jpeg';
 
 interface AvatarProps {
   onLightbulbClick?: () => void;
   highlightLightbulb?: boolean;
   /** Photo + ring outline (early, with portal) */
   shellEntranceActive?: boolean;
-  /** Orbit icons — after intro copy is complete */
+  /** Orbit icons — with portal entrance */
   iconsEntranceActive?: boolean;
 }
 
@@ -63,14 +66,14 @@ const Avatar: React.FC<AvatarProps> = ({
     >
       <img
         ref={avatarRef}
-        src="/images/avatar_linkedin.jpeg"
+        src={LOCAL_AVATAR_SRC}
         alt="Rick Owadally"
         className="linkedin-avatar"
         onError={(e) => {
           const target = e.target as HTMLImageElement;
           target.onerror = null;
-          target.src = 'https://via.placeholder.com/300';
-          target.alt = 'Image failed to load';
+          target.src = AVATAR_PLACEHOLDER_IMAGE;
+          target.alt = 'Rick Owadally';
         }}
       />
       

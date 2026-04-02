@@ -1,4 +1,8 @@
 import type { CaseStudy, WebsiteCard } from '../lib/fetchSiteContent';
+import { PORTFOLIO_CARD_PLACEHOLDER_IMAGE } from '../lib/imagePlaceholders';
+
+/** Bundled copy when Sanity is off — card art comes from Sanity CDN in production. */
+const img = PORTFOLIO_CARD_PLACEHOLDER_IMAGE;
 
 export const FALLBACK_WEBSITES: WebsiteCard[] = [
   {
@@ -6,7 +10,7 @@ export const FALLBACK_WEBSITES: WebsiteCard[] = [
     id: 0,
     title: 'Demarchelier Bistro',
     subtitle: 'UX, Dev, Design, Logo, CMS, Custom Wordpress Theme',
-    image: '/images/website0.png',
+    image: img,
     url: 'https://demarchelierrestaurant.com/',
   },
   {
@@ -14,7 +18,7 @@ export const FALLBACK_WEBSITES: WebsiteCard[] = [
     id: 1,
     title: 'Clyra Studios',
     subtitle: 'UX, Design, Dev',
-    image: '/images/clyrna.png',
+    image: img,
     url: 'https://clyrastudios.com/',
   },
   {
@@ -22,7 +26,7 @@ export const FALLBACK_WEBSITES: WebsiteCard[] = [
     id: 2,
     title: 'MyLottoGenerator.com',
     subtitle: 'UX, Design, Dev, AI Chat',
-    image: '/images/lottogen.png',
+    image: img,
     url: 'https://mylottogenerator.com/',
   },
   {
@@ -30,7 +34,7 @@ export const FALLBACK_WEBSITES: WebsiteCard[] = [
     id: 3,
     title: 'Ocean Luxe Painting & Flooring',
     subtitle: 'UX, Dev, Design, Logo',
-    image: '/images/website1.png',
+    image: img,
     url: 'https://coastalluxepainting.com/',
   },
   {
@@ -38,7 +42,7 @@ export const FALLBACK_WEBSITES: WebsiteCard[] = [
     id: 4,
     title: 'Office Chat (parody simulation)',
     subtitle: 'Web App, UX, Dev',
-    image: '/images/website6.png',
+    image: img,
     url: 'https://rickthewebdev.com/magic-8-ball/',
   },
   {
@@ -46,7 +50,7 @@ export const FALLBACK_WEBSITES: WebsiteCard[] = [
     id: 5,
     title: 'Profusek',
     subtitle: 'UX, Dev, Design, CMS, Custom Wordpress Theme',
-    image: '/images/website7.png',
+    image: img,
     url: 'https://profusek.com/',
   },
   {
@@ -54,7 +58,7 @@ export const FALLBACK_WEBSITES: WebsiteCard[] = [
     id: 6,
     title: 'Website (SPA)',
     subtitle: 'UX, Dev, Design, Logo',
-    image: '/images/website8.png',
+    image: img,
     url: 'https://taxexemptconsultants.com/',
   },
   {
@@ -62,7 +66,7 @@ export const FALLBACK_WEBSITES: WebsiteCard[] = [
     id: 7,
     title: 'Website',
     subtitle: 'UX, Dev',
-    image: '/images/website12.png',
+    image: img,
     url: 'https://subtenantstudios.com/',
   },
   {
@@ -70,7 +74,7 @@ export const FALLBACK_WEBSITES: WebsiteCard[] = [
     id: 8,
     title: 'Website',
     subtitle: 'UX, Dev, Design, Logo',
-    image: '/images/website2.png',
+    image: img,
     url: 'https://coastalluxeflooring.com/',
   },
   {
@@ -79,7 +83,7 @@ export const FALLBACK_WEBSITES: WebsiteCard[] = [
     title: 'Website: Redesign',
     subtitle:
       'UX, Dev, Tech Lead [This site is no longer live, but you can view an archived version on the Wayback Machine.',
-    image: '/images/website3.png',
+    image: img,
     url: 'https://web.archive.org/web/20250523084922/https://www.getrealaboutdiabetes.com/',
   },
   {
@@ -87,7 +91,7 @@ export const FALLBACK_WEBSITES: WebsiteCard[] = [
     id: 10,
     title: 'Website: User Experience',
     subtitle: 'UX, Design, Prototyping, Tech Lead',
-    image: '/images/website5.png',
+    image: img,
     url: 'https://www.ozempic.com/lifestyle-tips/healthy-eating.html',
   },
   {
@@ -95,7 +99,7 @@ export const FALLBACK_WEBSITES: WebsiteCard[] = [
     id: 11,
     title: 'Website (SPA)',
     subtitle: 'UX, Dev, Design',
-    image: '/images/website10.png',
+    image: img,
     url: 'https://ifatknaankostman.com/',
   },
   {
@@ -103,7 +107,7 @@ export const FALLBACK_WEBSITES: WebsiteCard[] = [
     id: 12,
     title: 'Website',
     subtitle: 'UX, Tech Lead',
-    image: '/images/website11.png',
+    image: img,
     url: 'https://diabeteseducation.novocare.com/',
   },
   {
@@ -111,7 +115,7 @@ export const FALLBACK_WEBSITES: WebsiteCard[] = [
     id: 13,
     title: 'Web (SPA)',
     subtitle: 'UX, Dev, Design',
-    image: '/images/website9.png',
+    image: img,
     url: '/',
   },
 ];
@@ -138,7 +142,7 @@ export const FALLBACK_CASE_STUDIES: CaseStudy[] = [
       'SSL',
       'Caching',
     ],
-    image: '/images/website0.png',
+    image: img,
     url: 'https://demarchelierrestaurant.com/',
   },
   {
@@ -161,7 +165,7 @@ export const FALLBACK_CASE_STUDIES: CaseStudy[] = [
       'Mobile Optimization',
       'Interactive Design',
     ],
-    image: '/images/website5.png',
+    image: img,
     url: 'https://www.ozempic.com/lifestyle-tips/healthy-eating.html',
   },
   {
@@ -182,7 +186,7 @@ export const FALLBACK_CASE_STUDIES: CaseStudy[] = [
       'Brand Integration',
       'Booking Systems',
     ],
-    image: '/images/website1.png',
+    image: img,
     url: 'https://coastalluxepainting.com/',
   },
 ];

@@ -2,6 +2,10 @@
  * One-off / idempotent seed: pushes WORK + SKILLS from the current site source into Sanity.
  * Run from repo: cd sanity && npm run migrate
  *
+ * Portfolio screenshots are no longer committed under public/images or repo-root images/.
+ * Restore that folder from backup if you need this script to upload card images; otherwise add
+ * images in Sanity Studio only.
+ *
  * Requires SANITY_API_WRITE_TOKEN in sanity/.env (Editor token from sanity.io/manage → API → Tokens).
  */
 import { createClient } from '@sanity/client';
@@ -256,8 +260,7 @@ Slack, Google Workspace, Microsoft Office`,
 ];
 
 /**
- * Site URLs are /images/foo.png. Files may live in public/images (Vite static) or repo-root images/
- * (this project keeps many screenshots only under images/).
+ * Site URLs are /images/foo.png. Resolve order: public/… then repo-root path (optional legacy).
  */
 function resolveLocalImageFile(webPath) {
   const normalized = webPath.replace(/^\//, '');

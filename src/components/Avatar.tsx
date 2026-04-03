@@ -61,6 +61,7 @@ const Avatar: React.FC<AvatarProps> = ({
   return (
     <div
       className={`avatar-container${shellEntranceActive ? ' avatar-container--enter' : ''}`}
+      data-cursor-hover
       onClick={handleAvatarClick}
       style={{ cursor: 'pointer' }}
     >

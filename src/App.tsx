@@ -6,6 +6,7 @@ import IntroSection from './components/IntroSection';
 import KonamiCode from './components/KonamiCode';
 import TetrisEasterEgg from './components/TetrisEasterEgg';
 import { SiteStackModal } from './components/SiteStackModal';
+import { CustomCursor } from './components/CustomCursor';
 import './App.css';
 import { sanityConfigured } from './lib/sanity';
 
@@ -85,6 +86,7 @@ function App() {
 
   return (
     <>
+      <CustomCursor />
       {/* Site preloader */}
       <div className={`site-preloader ${!isLoading ? 'hidden' : ''}`}>
         <div className="site-spinner"></div>

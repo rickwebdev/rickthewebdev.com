@@ -111,12 +111,18 @@ body {
   width: 60vw;
   box-sizing: border-box;
   position: relative;
-  overflow: hidden;
+  /* Scroll inside the card when copy exceeds height; never clip bio */
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   background-color: rgba(0, 0, 0, 0.4);
   mix-blend-mode: normal;
   /* Removed backdrop-filter to fix Chrome compatibility and flashing issues */
-  height: 85vh;
-  min-height: 600px;
+  /* Cap to viewport; min-height uses same cap so it never fights max-height */
+  height: min(85vh, 100dvh - 2rem);
+  min-height: min(600px, 85dvh, 100dvh - 2rem);
+  max-height: min(85vh, 100dvh - 2rem);
   border-radius: 18px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.25);
   scrollbar-width: thin; /* Firefox */
@@ -1302,8 +1308,9 @@ body {
     min-width: 700px;
     width: 50vw;
     padding: 4rem 5rem 4rem 4rem;
-    min-height: 880px;
-    max-height: 90vh;
+    max-height: min(90vh, 100dvh - 2rem);
+    height: min(90vh, 100dvh - 2rem);
+    min-height: min(880px, 85dvh, 100dvh - 2rem);
   }
 
   .large-text {

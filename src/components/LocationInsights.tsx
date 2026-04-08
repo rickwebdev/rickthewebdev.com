@@ -615,6 +615,7 @@ const LocationInsights: React.FC = () => {
     <div
       id="location-insights"
       className="location-insights"
+      data-cursor-native=""
       ref={nodeRef}
       onMouseDown={onMouseDown}
       style={{

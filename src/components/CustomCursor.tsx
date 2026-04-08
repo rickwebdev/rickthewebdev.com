@@ -28,6 +28,12 @@ function isInteractive(el: Element | null): boolean {
   return Boolean(el.closest(INTERACTIVE_SELECTOR));
 }
 
+/** Draggable / resizable UI (location marquee) — use system cursor, hide orbital overlay */
+function isNativeCursorZone(el: Element | null): boolean {
+  if (!el) return false;
+  return Boolean(el.closest('[data-cursor-native]'));
+}
+
 /**
  * Orbital cursor: outer ring lags and spins; core follows faster; streak follows velocity.
  * Fine pointer only; off when prefers-reduced-motion.
@@ -37,6 +43,7 @@ export function CustomCursor() {
   const [visible, setVisible] = useState(false);
   const [hover, setHover] = useState(false);
   const [textMode, setTextMode] = useState(false);
+  const [nativeUi, setNativeUi] = useState(false);
 
   const target = useRef({ x: -100, y: -100 });
   const orbit = useRef({ x: -100, y: -100 });
@@ -122,6 +129,15 @@ export function CustomCursor() {
       setVisible(true);
 
       const under = document.elementFromPoint(e.clientX, e.clientY);
+      const native = isNativeCursorZone(under);
+      setNativeUi(native);
+      if (native) {
+        hoverRef.current = false;
+        textRef.current = false;
+        setHover(false);
+        setTextMode(false);
+        return;
+      }
       const h = isInteractive(under);
       const t = isTextInput(under);
       hoverRef.current = h;
@@ -149,7 +165,7 @@ export function CustomCursor() {
 
   return (
     <div
-      className={`custom-cursor${visible ? ' custom-cursor--visible' : ''}${hover ? ' custom-cursor--hover' : ''}${textMode ? ' custom-cursor--text' : ''}`}
+      className={`custom-cursor${visible ? ' custom-cursor--visible' : ''}${nativeUi ? ' custom-cursor--native' : ''}${hover ? ' custom-cursor--hover' : ''}${textMode ? ' custom-cursor--text' : ''}`}
       aria-hidden
     >
       <div ref={orbitWrapRef} className="custom-cursor__wrap">

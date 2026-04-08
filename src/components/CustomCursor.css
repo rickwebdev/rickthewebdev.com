@@ -1,7 +1,11 @@
 /* Custom cursor — pointer: fine only; disabled when prefers-reduced-motion (see TSX) */
 
-body.custom-cursor-active,
-body.custom-cursor-active * {
+/* Hide system cursor everywhere except native-cursor zones (e.g. draggable location widget) */
+body.custom-cursor-active {
+  cursor: none !important;
+}
+
+body.custom-cursor-active *:not([data-cursor-native]):not([data-cursor-native] *) {
   cursor: none !important;
 }
 
@@ -28,6 +32,12 @@ body.custom-cursor-active textarea {
 
 .custom-cursor--visible {
   opacity: 1;
+}
+
+/* Orbital cursor off over [data-cursor-native] — user sees grab / resize / pointer */
+.custom-cursor.custom-cursor--native {
+  opacity: 0 !important;
+  transition: opacity 0.12s ease;
 }
 
 .custom-cursor__wrap {

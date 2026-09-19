@@ -54,20 +54,14 @@ export const SiteStackModal: React.FC<SiteStackModalProps> = ({ open, onClose })
         </h2>
         <h3 className="site-stack-subtitle">How to navigate</h3>
         <p className="site-stack-lede">
-          The home screen is intentionally minimal — name, intro, skills at a glance. The actual
-          portfolio is one click away: tap the lightbulb on the photo to open the Work · Skills ·
-          Contact panel.
+          Click the lightbulb on the photo to open Work, Skills, and Contact.
         </p>
         <h3 className="site-stack-subtitle">How it&apos;s built</h3>
         <p className="site-stack-lede">
-          <strong>React</strong> + <strong>TypeScript</strong> SPA, bundled with <strong>Vite</strong>,
-          deployed on <strong>Vercel</strong>. Content lives in <strong>Sanity</strong> — work and skills
-          update without a redeploy, and the app falls back gracefully to hardcoded copy if Sanity
-          isn&apos;t configured. Static deployment keeps it fast, secure, and cheap to run.
+          <strong>React</strong> and <strong>TypeScript</strong>, built with <strong>Vite</strong>.
+          Content is in <strong>Sanity</strong>. Hosted on <strong>Vercel</strong>.
         </p>
-        <p className="site-stack-lede">
-          There&apos;s a Konami code easter egg if you&apos;re into that kind of thing.
-        </p>
+        <p className="site-stack-lede">Konami code opens Tetris.</p>
         <p className="site-stack-lede site-stack-stack-line">
           <span className="site-stack-stack-prefix">Stack:</span>{' '}
           {links.map(({ label, href }, i) => (
